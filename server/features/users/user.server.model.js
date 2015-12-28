@@ -14,10 +14,6 @@ var UserSchema = new Schema({
         longitude: { type: String }
     },
     connections: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-
-
-
-
 });
 
 module.exports = mongoose.model('User', UserSchema);
