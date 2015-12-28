@@ -20,28 +20,24 @@ module.exports = function (passport) {
         callbackURL: googleAuth.googleAuthKeys.callbackURL
     }, function (req, accessToken, refreshToken, profile, done) {
 
-        User.findOne({ 'google.googleId': profile.id }, function (err, user) {
+        User.findOne({ 'googleId': profile.id }, function (err, user) {
             if (user) {
                 profile._json.image.url = profile._json.image.url.replace('?sz=50', '');
                 console.log('Google user found in db');
-                if (user.google.image !== profile._json.image.url) {
-                    user.google.image = profile._json.image.url;
+                if (user.image !== profile._json.image.url) {
+                    user.image = profile._json.image.url;
                 }
                 user.save();
                 done(null, user);
             } else {
                 console.log('Google user not found in db');
-
                 user = new User()
-                user.google.googleId = profile.id;
-                user.google.token = accessToken;
-                user.google.name = profile.displayName;
-                user.google.image = profile._json.image.url;
-                user.google.email = profile.emails[0].value;
+                user.googleId = profile.id;
+                user.name = profile.displayName;
+                user.image = profile._json.image.url;
                 // edit img url to not be just 50px //
-                user.google.image = user.google.image.replace('?sz=50', '');
-                console.log('New user created: ', user);
-
+                user.image = user.image.replace('?sz=50', '');
+                // console.log('New user created: ', user);
                 user.save();
                 done(null, user);
             }
