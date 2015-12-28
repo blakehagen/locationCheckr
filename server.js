@@ -8,7 +8,12 @@ require('./server/config/passport.google')(passport);
 var app = express();
 var db = mongoose();
 
+// INITIALIZE PASSPORT //
+app.use(passport.initialize());
+app.use(passport.session());
+
 // ROUTES //
+require('./server/features/auth/auth.server.routes')(app, passport);
 require('./server/features/users/user.server.routes')(app);
 
 
