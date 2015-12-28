@@ -6,6 +6,10 @@ var mongoose = require('./server/config/mongoose');
 var app = express();
 var db = mongoose();
 
+// ROUTES //
+require('./server/features/users/user.server.routes')(app);
+
+
 
 
 
