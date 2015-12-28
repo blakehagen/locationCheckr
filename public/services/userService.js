@@ -11,8 +11,23 @@ angular.module('locationTracker').service('userService', function ($http, $q) {
         return deferred.promise
     }
 
+    this.updateMyLocation = function (userId, locationData) {
+        console.log(locationData);
+        var deferred = $q.defer();
+        $http({
+            method: 'POST',
+            url: '/api/v1/user/' + userId,
+            dataType: 'json',
+            data: locationData
+        }).then(function (response) {
+            console.log(response);
+            deferred.resolve(response.data)
+        })
+        return deferred.promise
+    }
 
 
-    
-   
+
+
+
 });
