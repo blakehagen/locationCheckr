@@ -1,6 +1,10 @@
-// REQUIRE EXPRESS, MONGOOSE //
+// REQUIRE EXPRESS, MONGOOSE & PASSPORT //
 var express = require('./server/config/express');
-var mongoose = require('./server/config/mongoose');
+var mongoose = require('./server/config/mongoose')
+var passport = require('passport');
+require('./server/config/passport.google')(passport);
+
+
 
 // RUN EXPRESS & MONGOOSE CONFIG //
 var app = express();
