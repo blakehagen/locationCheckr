@@ -3,8 +3,7 @@ angular.module('locationTracker', ['ui.router', 'geolocation']).config(function 
     $stateProvider
         .state('login', {
             url: '/',
-            templateUrl: './features/login/loginTmpl.html',
-            controller: 'userCtrl'
+            templateUrl: './features/login/loginTmpl.html'
         })
 
         .state('user', {
