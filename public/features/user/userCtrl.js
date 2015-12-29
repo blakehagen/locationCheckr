@@ -7,7 +7,7 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
     $scope.getUserData = function () {
         $scope.loading = true;
         userService.getUser($scope.user).then(function (user) {
-            // console.log(user);
+            console.log(user);
             $scope.myConnections = user.connections;
             // console.log('myConnections ', $scope.myConnections);
 
@@ -71,12 +71,30 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
             $scope.myCurrentLocation = {
                 currentLocation: [data.coords.longitude, data.coords.latitude]
             };
-            // SEND CURRENT LOCATION INFO TO DB //
-            userService.updateMyLocation($scope.user, $scope.myCurrentLocation).then(function (response) {
-                // console.log(response);
-            })
         })
     };
+    
+    
+    // SEND CURRENT LOCATION INFO TO DB //
+    $scope.broadcastMyLocation = function () {
+        userService.updateMyLocation($scope.user, $scope.myCurrentLocation).then(function (response) {
+            console.log('response after broadcasting btn clicked ', response);
+        })
+    };
+    
+    // STOP SENDING LOCATION AND REMOVE LOCATION FROM CURRENT LOCATION ARRAY //
+    $scope.stop = function () {
+        var myLastKnownLocation = {
+            lastKnownLocation: [$scope.myCurrentLocation.currentLocation[0], $scope.myCurrentLocation.currentLocation[1]],
+            currentLocation: [null, null]
+        };
+        console.log('package ', myLastKnownLocation);
+        userService.stopLocation($scope.user, myLastKnownLocation).then(function (response) {
+            console.log('stop broadcast ', response);
+        })
+    };
+    
+
     
 
 

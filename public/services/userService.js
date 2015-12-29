@@ -9,7 +9,7 @@ angular.module('locationTracker').service('userService', function ($http, $q) {
             deferred.resolve(response.data)
         })
         return deferred.promise
-    }
+    };
 
     this.updateMyLocation = function (userId, locationData) {
         var deferred = $q.defer();
@@ -22,7 +22,20 @@ angular.module('locationTracker').service('userService', function ($http, $q) {
             deferred.resolve(response.data)
         })
         return deferred.promise
-    }
+    };
+    
+      this.stopLocation = function (userId, locationData) {
+        var deferred = $q.defer();
+        $http({
+            method: 'POST',
+            url: '/api/v1/user/stop/' + userId,
+            dataType: 'json',
+            data: locationData
+        }).then(function (response) {
+            deferred.resolve(response.data)
+        })
+        return deferred.promise
+    };
 
 
 
