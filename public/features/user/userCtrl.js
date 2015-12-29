@@ -44,7 +44,7 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
 
             myLocation.setPosition(pos);
             
-            // CONVERT CONNECTION LOCATIONS TO GOOGLE MAPS FORMAT //
+            // CONVERT CONNECTION **CURRENT** LOCATIONS TO GOOGLE MAPS FORMAT //
             $scope.connectionsCurrentLocations = [];
             for (var i = 0; i < $scope.myConnections.length; i++) {
                 var connection = $scope.myConnections[i];
@@ -64,12 +64,36 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
                 });
             });
             
+            // CONVERT CONNECTION ** AST KNOWN** LOCATIONS TO GOOGLE MAPS FORMAT //
+            $scope.connectionsPreviousLocation = [];
+            for (var i = 0; i < $scope.myConnections.length; i++) {
+                var connection = $scope.myConnections[i];
+                $scope.connectionsPreviousLocation.push({
+                    latlon: new google.maps.LatLng(connection.lastKnownLocation[1], connection.lastKnownLocation[0]),
+                    name: connection.name
+                })
+            }
+            // console.log($scope.connectionsCurrentLocations);
+
+            $scope.connectionsPreviousLocation.forEach(function (n, i) {
+                var marker = new google.maps.Marker({
+                    position: n.latlon,
+                    map: map,
+                    title: n.name,
+                    icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+                });
+            });
+            
+            
+            
+            
             // infoWindow.setPosition(pos);
             // infoWindow.setContent('You are here!');
             
             // SET CURRENT LOCATION TO SEND TO DB // --> NOTICE FORMAT IS OPPOSITE OF GOOGLE MAPS FORMAT
             $scope.myCurrentLocation = {
-                currentLocation: [data.coords.longitude, data.coords.latitude]
+                currentLocation: [data.coords.longitude, data.coords.latitude],
+                lastKnownLocation: [null, null]
             };
         })
     };
@@ -88,7 +112,6 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
             lastKnownLocation: [$scope.myCurrentLocation.currentLocation[0], $scope.myCurrentLocation.currentLocation[1]],
             currentLocation: [null, null]
         };
-        console.log('package ', myLastKnownLocation);
         userService.stopLocation($scope.user, myLastKnownLocation).then(function (response) {
             console.log('stop broadcast ', response);
         })
