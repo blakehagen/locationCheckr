@@ -1,7 +1,13 @@
 <div class="find-loc">
-    <button ng-click="getMyLocation()">Get My Location</button>
+    <button>Broadcast My Location</button>
 </div>
 
 <div class="map-container" id="map">
+    <div class="loading-info" ng-show="loading">
+        <i class="fa fa-spinner fa-3x fa-pulse"></i>
+        <br>
+        <br>
+        <h4>Finding your location ...</h4>
+    </div>
 
 </div>
