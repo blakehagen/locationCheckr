@@ -3,17 +3,37 @@
     -webkit-box-sizing: border-box;
 }
 
+/*html {
+    background: #569BA0;
+}*/
+
 body {
     width: 100%;
     height: 100vh;
     margin: 0;
-    border: 1px solid #fff;
+    /*border: 1px solid #fff;*/
 }
 
 h1,h2,h3,h4,h5,h6 {
    font-family: 'Open Sans', sans-serif;
    margin: 0;
 }
+
+/*.login-container {
+    border: 1px solid #FFF;
+    border-radius: 10px;
+    /*width: 300px;*/
+    /*height: 150px;*/
+    /*margin: 0 auto;
+}*/
+
+    /*.login-container h1 {
+        color: #FFF;
+        font-size: 64px;
+        font-weight: 100;
+        letter-spacing: 1px;
+        text-align: center;
+    }*/
 
 .top {
     margin: 0 auto;

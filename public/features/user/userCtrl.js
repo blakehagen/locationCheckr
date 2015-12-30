@@ -80,7 +80,7 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
 
 
             
-            // CONVERT CONNECTION ** AST KNOWN** LOCATIONS TO GOOGLE MAPS FORMAT //
+            // CONVERT CONNECTION **LAST KNOWN** LOCATIONS TO GOOGLE MAPS FORMAT //
             $scope.connectionsPreviousLocation = [];
             for (var i = 0; i < $scope.myConnections.length; i++) {
 
@@ -147,6 +147,14 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
         };
         userService.stopLocation($scope.user, myLastKnownLocation).then(function (response) {
             console.log('stop broadcast ', response);
+        })
+    };
+    
+    
+    // GET LOCATIONS FOR CONNECTIONS (AT SET INTERVALS)?? //
+    $scope.pingConnectionLocations = function(){
+        userService.getConnectionLocations($scope.user).then(function(response){
+            console.log(response);
         })
     };
     
