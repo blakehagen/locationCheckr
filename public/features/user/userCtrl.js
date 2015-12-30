@@ -51,11 +51,13 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
             for (var i = 0; i < $scope.myConnections.length; i++) {
                 var connection = $scope.myConnections[i];
 
+                var contentStringCurrent = "<p>" + connection.name + " has been here since " + connection.updated_at_readable + "</p>";
+
                 $scope.connectionsCurrentLocations.push({
                     latlon: new google.maps.LatLng(connection.currentLocation[1], connection.currentLocation[0]),
                     name: connection.name,
                     message: new google.maps.InfoWindow({
-                        content: 'hello world!',
+                        content: contentStringCurrent,
                         maxWidth: 320
                     })
                 })
@@ -69,6 +71,11 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
                     title: n.name,
                     icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
                 });
+
+                google.maps.event.addListener(marker, 'click', function (e) {
+                    currentSelectedMarker = n;
+                    n.message.open(map, marker);
+                });
             });
 
 
@@ -76,10 +83,18 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
             // CONVERT CONNECTION ** AST KNOWN** LOCATIONS TO GOOGLE MAPS FORMAT //
             $scope.connectionsPreviousLocation = [];
             for (var i = 0; i < $scope.myConnections.length; i++) {
+
                 var connection = $scope.myConnections[i];
+
+                var contentStringPrevious = "<p>" + connection.name + " was last here " + connection.updated_at_readable + "</p>";
+
                 $scope.connectionsPreviousLocation.push({
                     latlon: new google.maps.LatLng(connection.lastKnownLocation[1], connection.lastKnownLocation[0]),
-                    name: connection.name
+                    name: connection.name,
+                    message: new google.maps.InfoWindow({
+                        content: contentStringPrevious,
+                        maxWidth: 320
+                    })
                 })
             }
             // console.log($scope.connectionsCurrentLocations);
@@ -90,6 +105,11 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
                     map: map,
                     title: n.name,
                     icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+                });
+
+                google.maps.event.addListener(marker, 'click', function (e) {
+                    currentSelectedMarker = n;
+                    n.message.open(map, marker);
                 });
             });
             
@@ -110,6 +130,7 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
     $scope.broadcastMyLocation = function () {
         $scope.toggleSwitch = !$scope.toggleSwitch;
         $scope.myCurrentLocation.updated_at = new Date();
+        $scope.myCurrentLocation.updated_at_readable = moment().format('ddd, MMM D YYYY, h:mma');
         userService.updateMyLocation($scope.user, $scope.myCurrentLocation).then(function (response) {
             console.log('response after broadcasting btn clicked ', response);
         })
@@ -121,7 +142,8 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
         var myLastKnownLocation = {
             lastKnownLocation: [$scope.myCurrentLocation.currentLocation[0], $scope.myCurrentLocation.currentLocation[1]],
             currentLocation: [null, null],
-            updated_at: new Date()
+            updated_at: new Date(),
+            updated_at_readable: moment().format('ddd, MMM D YYYY, h:mma')
         };
         userService.stopLocation($scope.user, myLastKnownLocation).then(function (response) {
             console.log('stop broadcast ', response);

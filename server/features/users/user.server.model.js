@@ -10,6 +10,7 @@ var UserSchema = new Schema({
     htmlverified: { type: String },
     created_at: { type: Date, default: new Date() },
     updated_at: { type: Date },
+    updated_at_readable: { type: String },
     connections: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 

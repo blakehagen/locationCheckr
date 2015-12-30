@@ -1,4 +1,4 @@
-angular.module('locationTracker', ['ui.router', 'geolocation']).config(function ($stateProvider, $urlRouterProvider) {
+angular.module('locationTracker', ['ui.router', 'geolocation', 'angularMoment']).config(function ($stateProvider, $urlRouterProvider) {
 
     $stateProvider
         .state('login', {
