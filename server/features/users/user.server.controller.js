@@ -23,6 +23,7 @@ module.exports = {
     },
 
     stopLocation: function (req, res, next) {
+        console.log(req.body);
         User.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (err, user) {
             if (err) {
                 res.status(500).send(err);

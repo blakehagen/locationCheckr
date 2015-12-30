@@ -18,6 +18,8 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
     // RUN GET USER FUNCTION //
     $scope.getUserData();
     
+    // setInterval($scope.getUserData, 5000);
+    
     // GET USER'S LOCATION/MAP VIA GOOGLE MAPS //
     // THIS FUNCTION RUNS AS PART OF getUserData FUNCTION //
     $scope.getMyLocation = function () {
@@ -27,7 +29,7 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
 
             var map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: data.coords.latitude, lng: data.coords.longitude },
-                zoom: 15
+                zoom: 14
             });
             // var infoWindow = new google.maps.InfoWindow({ map: map });
             var pos = {
@@ -48,9 +50,14 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
             $scope.connectionsCurrentLocations = [];
             for (var i = 0; i < $scope.myConnections.length; i++) {
                 var connection = $scope.myConnections[i];
+
                 $scope.connectionsCurrentLocations.push({
                     latlon: new google.maps.LatLng(connection.currentLocation[1], connection.currentLocation[0]),
-                    name: connection.name
+                    name: connection.name,
+                    message: new google.maps.InfoWindow({
+                        content: 'hello world!',
+                        maxWidth: 320
+                    })
                 })
             }
             // console.log($scope.connectionsCurrentLocations);
@@ -63,6 +70,8 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
                     icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
                 });
             });
+
+
             
             // CONVERT CONNECTION ** AST KNOWN** LOCATIONS TO GOOGLE MAPS FORMAT //
             $scope.connectionsPreviousLocation = [];
@@ -84,9 +93,6 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
                 });
             });
             
-            
-            
-            
             // infoWindow.setPosition(pos);
             // infoWindow.setContent('You are here!');
             
@@ -103,6 +109,7 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
     $scope.toggleSwitch = true;
     $scope.broadcastMyLocation = function () {
         $scope.toggleSwitch = !$scope.toggleSwitch;
+        $scope.myCurrentLocation.updated_at = new Date();
         userService.updateMyLocation($scope.user, $scope.myCurrentLocation).then(function (response) {
             console.log('response after broadcasting btn clicked ', response);
         })
@@ -113,7 +120,8 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
         $scope.toggleSwitch = !$scope.toggleSwitch;
         var myLastKnownLocation = {
             lastKnownLocation: [$scope.myCurrentLocation.currentLocation[0], $scope.myCurrentLocation.currentLocation[1]],
-            currentLocation: [null, null]
+            currentLocation: [null, null],
+            updated_at: new Date()
         };
         userService.stopLocation($scope.user, myLastKnownLocation).then(function (response) {
             console.log('stop broadcast ', response);
