@@ -15,21 +15,58 @@ h1,h2,h3,h4,h5,h6 {
    margin: 0;
 }
 
-.find-loc {
-    width: 100%;
-    height: 30px;
-    border: 1px solid green;
-    text-align: center;
-    line-height: 27px;
-    margin-top: 20px;
+.top {
+    margin: 0 auto;
+    width: 99%;
+    max-width: 1500px;
+    height: 50px;
+}
+
+.toggle-container {
+    display: inline-block;
+    height: 100%;
+    margin-left: 10px;
+}
+
+    .fa-toggle-on, .fa-toggle-off {
+        cursor: pointer;
+    }
+    
+    .toggle-container h5 {
+        font-weight: 100;
+        font-size: 14px;
+        display: inline-block;
+        vertical-align: top;
+        padding: 14px;
+    }
+    
+    .green {
+        color: seagreen;
+        font-weight: 800;
+    }
+    
+    .red {
+        color: #ED6464;
+        font-weight: 800;
+    }
+
+.action-btn {
+    border: 1px solid dodgerblue;
+    border-radius: 14px;
+    height: 35px;
+    width: 120px;
+    display: inline-block;
+    margin-right: 18px;
+    margin-top: 6px;
+    cursor: pointer;
 }
 
 .map-container {
-    width: 97%;
+    width: 99%;
+    max-width: 1500px;
     height: 80%;
     margin: 0px auto;
-    /*padding: 2px;
-    border: 2px solid #ccc;*/
+    border-radius: 10px;
 }
 
 .loading-info {

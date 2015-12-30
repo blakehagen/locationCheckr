@@ -1,7 +1,21 @@
-<div class="find-loc">
-    <button ng-click="broadcastMyLocation()">Broadcast My Location</button>
-    <button ng-click="stop()">Stop Bradcasting</button>
+<div class="top">
+    <div class="toggle-container" ng-hide="toggleSwitch">
+        <i class="fa fa-toggle-on fa-3x" ng-click="stop()"></i>
+        <h5>Location Sharing <span class="green">&nbsp;ON</span></h5>
+    </div>
+    <div class="toggle-container" ng-show="toggleSwitch">
+        <i class="fa fa-toggle-off fa-3x" ng-click="broadcastMyLocation()"></i>
+        <h5>Location Sharing <span class="red">&nbsp;OFF</span></h5>
+
+    </div>
+
+
+
 </div>
+
+
+
+
 
 <div class="map-container" id="map">
     <div class="loading-info" ng-show="loading">
@@ -9,6 +23,16 @@
         <br>
         <br>
         <h4>Finding your location ...</h4>
+    </div>
+</div>
+
+<div>
+    <div class="action-btn">
+
+    </div>
+
+    <div class="action-btn">
+
     </div>
 
 </div>

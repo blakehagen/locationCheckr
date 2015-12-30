@@ -98,9 +98,11 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
         })
     };
     
-    
+
     // SEND CURRENT LOCATION INFO TO DB //
+    $scope.toggleSwitch = true;
     $scope.broadcastMyLocation = function () {
+        $scope.toggleSwitch = !$scope.toggleSwitch;
         userService.updateMyLocation($scope.user, $scope.myCurrentLocation).then(function (response) {
             console.log('response after broadcasting btn clicked ', response);
         })
@@ -108,6 +110,7 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
     
     // STOP SENDING LOCATION AND REMOVE LOCATION FROM CURRENT LOCATION ARRAY //
     $scope.stop = function () {
+        $scope.toggleSwitch = !$scope.toggleSwitch;
         var myLastKnownLocation = {
             lastKnownLocation: [$scope.myCurrentLocation.currentLocation[0], $scope.myCurrentLocation.currentLocation[1]],
             currentLocation: [null, null]
@@ -116,6 +119,7 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
             console.log('stop broadcast ', response);
         })
     };
+    
     
 
     
