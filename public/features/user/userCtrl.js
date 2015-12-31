@@ -158,6 +158,8 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
                 title: n.name,
                 icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
             });
+            marker.setMap(null);
+            marker.setMap(map);
 
             google.maps.event.addListener(marker, 'click', function (e) {
                 currentSelectedMarker = n;
