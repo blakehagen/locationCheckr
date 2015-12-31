@@ -8,8 +8,9 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
         $scope.loading = true;
         userService.getUser($scope.user).then(function (user) {
             console.log(user);
+            $scope.myConnections = [];
             $scope.myConnections = user.connections;
-            // console.log('myConnections ', $scope.myConnections);
+            console.log('my connections initial load: 1', $scope.myConnections);
 
             $scope.getMyLocation();
         })
@@ -17,8 +18,7 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
 
     // RUN GET USER FUNCTION //
     $scope.getUserData();
-    
-    // setInterval($scope.getUserData, 5000);
+   
     
     // GET USER'S LOCATION/MAP VIA GOOGLE MAPS //
     // THIS FUNCTION RUNS AS PART OF getUserData FUNCTION //
@@ -31,6 +31,7 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
                 center: { lat: data.coords.latitude, lng: data.coords.longitude },
                 zoom: 14
             });
+            $scope.map = map;
             // var infoWindow = new google.maps.InfoWindow({ map: map });
             var pos = {
                 lat: data.coords.latitude,
@@ -46,85 +47,126 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
 
             myLocation.setPosition(pos);
             
-            // CONVERT CONNECTION **CURRENT** LOCATIONS TO GOOGLE MAPS FORMAT //
-            $scope.connectionsCurrentLocations = [];
-            for (var i = 0; i < $scope.myConnections.length; i++) {
-                var connection = $scope.myConnections[i];
+            // TRY TO WRAP THIS IN A FUNCTION AND EXEC FUNC HERE //
+            updateMapMarkerData(map);
+            
+            // // CONVERT CONNECTION **CURRENT** LOCATIONS TO GOOGLE MAPS FORMAT //
+            // $scope.connectionsCurrentLocations = [];
+            // for (var i = 0; i < $scope.myConnections.length; i++) {
+            //     var connection = $scope.myConnections[i];
 
-                var contentStringCurrent = "<p>" + connection.name + " has been here since " + connection.updated_at_readable + "</p>";
+            //     var contentStringCurrent = "<p>" + connection.name + " has been here since " + connection.updated_at_readable + "</p>";
 
-                $scope.connectionsCurrentLocations.push({
-                    latlon: new google.maps.LatLng(connection.currentLocation[1], connection.currentLocation[0]),
-                    name: connection.name,
-                    message: new google.maps.InfoWindow({
-                        content: contentStringCurrent,
-                        maxWidth: 320
-                    })
-                })
-            }
-            // console.log($scope.connectionsCurrentLocations);
+            //     $scope.connectionsCurrentLocations.push({
+            //         latlon: new google.maps.LatLng(connection.currentLocation[1], connection.currentLocation[0]),
+            //         name: connection.name,
+            //         message: new google.maps.InfoWindow({
+            //             content: contentStringCurrent,
+            //             maxWidth: 320
+            //         })
+            //     })
+            // }
+            // // console.log($scope.connectionsCurrentLocations);
 
-            $scope.connectionsCurrentLocations.forEach(function (n, i) {
-                var marker = new google.maps.Marker({
-                    position: n.latlon,
-                    map: map,
-                    title: n.name,
-                    icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
-                });
+            // $scope.connectionsCurrentLocations.forEach(function (n, i) {
+            //     var marker = new google.maps.Marker({
+            //         position: n.latlon,
+            //         map: map,
+            //         title: n.name,
+            //         icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+            //     });
 
-                google.maps.event.addListener(marker, 'click', function (e) {
-                    currentSelectedMarker = n;
-                    n.message.open(map, marker);
-                });
-            });
+            //     google.maps.event.addListener(marker, 'click', function (e) {
+            //         currentSelectedMarker = n;
+            //         n.message.open(map, marker);
+            //     });
+            // });
 
 
             
-            // CONVERT CONNECTION **LAST KNOWN** LOCATIONS TO GOOGLE MAPS FORMAT //
-            $scope.connectionsPreviousLocation = [];
-            for (var i = 0; i < $scope.myConnections.length; i++) {
+            // // CONVERT CONNECTION **LAST KNOWN** LOCATIONS TO GOOGLE MAPS FORMAT //
+            // $scope.connectionsPreviousLocation = [];
+            // for (var i = 0; i < $scope.myConnections.length; i++) {
 
-                var connection = $scope.myConnections[i];
+            //     var connection = $scope.myConnections[i];
 
-                var contentStringPrevious = "<p>" + connection.name + " was last here " + connection.updated_at_readable + "</p>";
+            //     var contentStringPrevious = "<p>" + connection.name + " was last here " + connection.updated_at_readable + "</p>";
 
-                $scope.connectionsPreviousLocation.push({
-                    latlon: new google.maps.LatLng(connection.lastKnownLocation[1], connection.lastKnownLocation[0]),
-                    name: connection.name,
-                    message: new google.maps.InfoWindow({
-                        content: contentStringPrevious,
-                        maxWidth: 320
-                    })
-                })
-            }
-            // console.log($scope.connectionsCurrentLocations);
+            //     $scope.connectionsPreviousLocation.push({
+            //         latlon: new google.maps.LatLng(connection.lastKnownLocation[1], connection.lastKnownLocation[0]),
+            //         name: connection.name,
+            //         message: new google.maps.InfoWindow({
+            //             content: contentStringPrevious,
+            //             maxWidth: 320
+            //         })
+            //     })
+            // }
+            // // console.log($scope.connectionsCurrentLocations);
 
-            $scope.connectionsPreviousLocation.forEach(function (n, i) {
-                var marker = new google.maps.Marker({
-                    position: n.latlon,
-                    map: map,
-                    title: n.name,
-                    icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-                });
+            // $scope.connectionsPreviousLocation.forEach(function (n, i) {
+            //     var marker = new google.maps.Marker({
+            //         position: n.latlon,
+            //         map: map,
+            //         title: n.name,
+            //         icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+            //     });
 
-                google.maps.event.addListener(marker, 'click', function (e) {
-                    currentSelectedMarker = n;
-                    n.message.open(map, marker);
-                });
-            });
+            //     google.maps.event.addListener(marker, 'click', function (e) {
+            //         currentSelectedMarker = n;
+            //         n.message.open(map, marker);
+            //     });
+            // });
             
             // infoWindow.setPosition(pos);
             // infoWindow.setContent('You are here!');
             
             // SET CURRENT LOCATION TO SEND TO DB // --> NOTICE FORMAT IS OPPOSITE OF GOOGLE MAPS FORMAT
             $scope.myCurrentLocation = {
-                currentLocation: [data.coords.longitude, data.coords.latitude],
-                lastKnownLocation: [null, null]
+                currentLocation: [data.coords.longitude, data.coords.latitude]
+                // lastKnownLocation: [null, null]
             };
         })
     };
     
+    
+    // UPDATE MYCONNECTIONS DATA TO UPDATE MAP MARKERS //
+    
+    function updateMapMarkerData(map) {
+        console.log('updating map marker Data');
+        // CONVERT CONNECTION **CURRENT** LOCATIONS TO GOOGLE MAPS FORMAT //
+        $scope.connectionData = [];
+        for (var i = 0; i < $scope.myConnections.length; i++) {
+            var connection = $scope.myConnections[i];
 
+            var contentStringCurrent = "<p>" + connection.name + " has been here since " + connection.updated_at_readable + "</p>";
+
+            $scope.connectionData.push({
+                latlon: new google.maps.LatLng(connection.currentLocation[1], connection.currentLocation[0]),
+                name: connection.name,
+                message: new google.maps.InfoWindow({
+                    content: contentStringCurrent,
+                    maxWidth: 320
+                })
+            })
+        }
+        console.log($scope.connectionData);
+
+        $scope.connectionData.forEach(function (n, i) {
+            var marker = new google.maps.Marker({
+                position: n.latlon,
+                map: map,
+                title: n.name,
+                icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+            });
+
+            google.maps.event.addListener(marker, 'click', function (e) {
+                currentSelectedMarker = n;
+                n.message.open(map, marker);
+            });
+        });
+    };
+            
+    
     // SEND CURRENT LOCATION INFO TO DB //
     $scope.toggleSwitch = true;
     $scope.broadcastMyLocation = function () {
@@ -140,7 +182,7 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
     $scope.stop = function () {
         $scope.toggleSwitch = !$scope.toggleSwitch;
         var myLastKnownLocation = {
-            lastKnownLocation: [$scope.myCurrentLocation.currentLocation[0], $scope.myCurrentLocation.currentLocation[1]],
+            // lastKnownLocation: [$scope.myCurrentLocation.currentLocation[0], $scope.myCurrentLocation.currentLocation[1]],
             currentLocation: [null, null],
             updated_at: new Date(),
             updated_at_readable: moment().format('ddd, MMM D YYYY, h:mma')
@@ -151,61 +193,18 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
     };
     
     
-    // GET LOCATIONS FOR CONNECTIONS (AT SET INTERVALS)?? //
-    $scope.pingConnectionLocations = function(){
-        userService.getConnectionLocations($scope.user).then(function(response){
+    // GET LOCATIONS FOR CONNECTIONS (AT SET INTERVAL) //
+    $scope.pingConnectionLocations = function () {
+        userService.getConnectionLocations($scope.user).then(function (response) {
             console.log(response);
+            $scope.myConnections = [];
+            $scope.myConnections = response.connections;
+            console.log('my connections 2 ', $scope.myConnections);
+            updateMapMarkerData($scope.map);
+            console.log('PING');
         })
     };
     
-    
-
-    
-
-
-
-    // FROM GOOGLE MAPS DOCS --> USED AS REFERENCE //
-
-    // function initMap() {
-    //     var map = new google.maps.Map(document.getElementById('map'), {
-    //         center: { lat: -34.397, lng: 150.644 },
-    //         zoom: 6
-    //     });
-    //     var infoWindow = new google.maps.InfoWindow({ map: map });
-
-    //     // Try HTML5 geolocation.
-    //     if (navigator.geolocation) {
-    //         navigator.geolocation.getCurrentPosition(function (position) {
-    //             var pos = {
-    //                 lat: position.coords.latitude,
-    //                 lng: position.coords.longitude
-    //             };
-
-    //             infoWindow.setPosition(pos);
-    //             infoWindow.setContent('Location found.');
-    //             map.setCenter(pos);
-    //         }, function () {
-    //             handleLocationError(true, infoWindow, map.getCenter());
-    //         });
-    //     } else {
-    //         // Browser doesn't support Geolocation
-    //         handleLocationError(false, infoWindow, map.getCenter());
-    //     }
-    // }
-
-    // function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    //     infoWindow.setPosition(pos);
-    //     infoWindow.setContent(browserHasGeolocation ?
-    //         'Error: The Geolocation service failed.' :
-    //         'Error: Your browser doesn\'t support geolocation.');
-    // }
-
-
-
-
-
-
-
-
+    // setInterval($scope.pingConnectionLocations, 10000);
 
 });

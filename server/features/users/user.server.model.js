@@ -6,7 +6,7 @@ var UserSchema = new Schema({
     googleId: { type: String, required: true, unique: true },
     image: { type: String },
     currentLocation: { type: [Number] }, // --> **** NOTE **** MONGOOSE REQUIRES [LONG, LAT] FORMAT // GOOGLE MAPS REQUIRES OPPOSITE [LAT, LONG] //
-    lastKnownLocation: { type: [Number] },
+    // lastKnownLocation: { type: [Number] },
     htmlverified: { type: String },
     created_at: { type: Date, default: new Date() },
     updated_at: { type: Date },
