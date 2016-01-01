@@ -12,6 +12,7 @@ var UserSchema = new Schema({
     updated_at: { type: Date },
     updated_at_readable: { type: String },
     connections: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    status: { type: String }
 });
 
 // SET created_at PARAMETER EQUAL TO CURRENT TIME //
