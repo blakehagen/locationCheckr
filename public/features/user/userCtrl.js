@@ -58,6 +58,7 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
     var locations = [];
     var markers = [];
     $scope.mapConnections = function () {
+        console.log('PING');
         for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
         }
@@ -83,7 +84,7 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
                     status: connection.status
                 })
             };
-            console.log(locations);
+            // console.log(locations);
 
             for (var i = 0; i < locations.length; i++) {
                 var marker = new google.maps.Marker({
@@ -141,7 +142,7 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
     };
 
     $scope.go = function () {
-        setInterval($scope.mapConnections, 30000);
+        setInterval($scope.mapConnections, 20000);
     };
 
 });
