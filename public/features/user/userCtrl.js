@@ -1,6 +1,7 @@
-angular.module('locationTracker').controller('userCtrl', function ($scope, $stateParams, geolocation, userService) {
+angular.module('locationTracker').controller('userCtrl', function ($rootScope, $scope, $stateParams, geolocation, userService, mapService, $state) {
 
-    // SET USER ID TO SCOPE//
+    // SET USER ID TO SCOPE/ ROOTSCOPE //
+    $rootScope.user = $stateParams.id;
     $scope.user = $stateParams.id;
 
     // GET USER DATA/LOCATION ON SIGN IN //
@@ -43,12 +44,18 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
             });
 
             myLocation.setPosition(pos);
-            
-            // SET CURRENT LOCATION TO SEND TO DB // --> NOTICE FORMAT IS OPPOSITE OF GOOGLE MAPS FORMAT
-            $scope.myCurrentLocation = {
-                currentLocation: [data.coords.longitude, data.coords.latitude],
-                status: 'active'
-            };
+           
+            // GET ADDRESS VIA REVERSE GEOLOCATION TO SHOW IN LIST VIEW //
+            mapService.reverseGeolocate(pos).then(function (address) {
+                // SET CURRENT LOCATION TO SEND TO DB WHEN LOCATION IS BROADCAST //
+                console.log(address);
+                $scope.myCurrentLocation = {
+                    currentLocation: [data.coords.longitude, data.coords.latitude],
+                    status: 'active',
+                    address: address
+                };
+            });
+
             $scope.mapConnections();
             $scope.go();
         })
@@ -72,8 +79,10 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
                 if (response.connections[i].status === 'stop') {
                     // console.log('ding');
                     response.connections.splice(i, 1);
+                    i--;
                 }
             }
+
             for (var i = 0; i < response.connections.length; i++) {
                 var connection = response.connections[i];
                 locations.push({
@@ -108,7 +117,7 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
 
                 google.maps.event.addListener(marker, 'click', function () {
                     infowindow.setContent(this.info);
-                    infowindow.open(map, this); 
+                    infowindow.open(map, this);
                 })
             }
             // console.log(markers.length);
@@ -116,7 +125,7 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
         })
     };
 
-    // SEND CURRENT LOCATION INFO TO DB //
+    // SEND MY CURRENT LOCATION INFO TO DB //
     $scope.toggleSwitch = true;
     $scope.broadcastMyLocation = function () {
         $scope.toggleSwitch = !$scope.toggleSwitch;
@@ -134,7 +143,8 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
             currentLocation: [undefined, undefined],
             updated_at: new Date(),
             updated_at_readable: moment().format('ddd, MMM D YYYY, h:mma'),
-            status: 'stop'
+            status: 'stop',
+            address: undefined
         };
         userService.stopLocation($scope.user, stopData).then(function (response) {
             console.log('stop broadcast ', response);
@@ -144,5 +154,9 @@ angular.module('locationTracker').controller('userCtrl', function ($scope, $stat
     $scope.go = function () {
         setInterval($scope.mapConnections, 20000);
     };
+
+    $scope.listView = function () {
+        $state.go('list', { id: $scope.user });
+    }
 
 });

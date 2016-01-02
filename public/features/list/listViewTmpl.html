@@ -1,0 +1,37 @@
+<div class="top center">
+    <h3><i class="fa fa-circle"></i>Online Connections</h3>
+    <!--<button ng-click="reverseGeoLocate()">Reverese Geolocate</button>-->
+</div>
+
+<div class="list-container">
+    <div class="list-view-item" ng-repeat="location in listViewData track by $index">
+        <div class="row">
+            <img ng-src="{{location.image}}">
+            <h5>{{location.name}}</h5>
+        </div>
+        <div class="row">
+            <h5>Approximate Location: </h5>
+            <h5>{{location.address}}</h5>
+        </div>
+    </div>
+</div>
+
+<div class="action-container">
+    <a title="Map View">
+        <div class="action-btn" ng-click="mapView()">
+            <i class="fa fa-map-o"></i>
+        </div>
+    </a>
+
+    <div class="action-btn">
+        <i class="fa fa-search"></i>
+    </div>
+    <div class="action-btn">
+        <i class="fa fa-info"></i>
+    </div>
+    <a href="/auth/logout">
+        <div class="action-btn">
+            <i class="fa fa-sign-out"></i>
+        </div>
+    </a>
+</div>

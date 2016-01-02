@@ -3,15 +3,24 @@
     -webkit-box-sizing: border-box;
 }
 
-/*html {
-    background: #569BA0;
-}*/
+html {
+    height:100%;
+}
 
 body {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     margin: 0;
-    border: 1px solid #fff;
+    /*border: 1px solid #fff;*/
+}
+
+a { 
+    text-decoration: none;
+    color: #333;
+}
+
+a:visited { 
+    text-decoration: none;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -70,32 +79,38 @@ h1,h2,h3,h4,h5,h6 {
         color: #ED6464;
         font-weight: 800;
     }
-
+    
 .action-container {
     width: 100%;
     height: 50px;
     /*border: 1px solid green;*/
     text-align: center;
-    margin-top: 7px;
 }
 
 .action-btn {
     border: 1px solid #333;
     border-radius: 50%;
-    height: 40px;
-    width: 40px;
+    height: 37px;
+    width: 37px;
     display: inline-block;
     margin-right: 18px;
-    margin-top: 4px;
+    margin-top: 7px;
     cursor: pointer;
 }
 
+.action-btn:hover {
+     box-shadow: 0 0 2px #444;
+}
+
+    .action-btn .fa  {
+        margin: 10px 0px 0 0;
+    }
+    
 .map-container {
-    width: 99%;
+    width: 100%;
     max-width: 1500px;
-    height: 85%;
+    height: 87%;
     margin: 0px auto;
-    border-radius: 10px;
 }
 
 .loading-info {
@@ -108,4 +123,58 @@ h1,h2,h3,h4,h5,h6 {
         font-size: 16px;
         color: #333;
         letter-spacing: 1px;
+    }
+    
+/* LIST VIEW */
+
+.list-view-item {
+    border: 1px solid blue;
+    width: 100%;
+    margin: 0 auto;
+}
+
+    .top h3 {
+        font-size: 24px;
+        font-weight: 100;
+        line-height: 62px;
+    }
+    
+.center {
+    text-align: center;
+}
+
+.fa-circle {
+    color: green;
+    font-size: 12px;
+    vertical-align: top;
+    line-height: 64px;
+    margin-right: 8px;
+}
+
+.list-container {
+    width: 30%;
+    min-height: 150px;
+    margin: 16px auto;
+    border: 1px solid rebeccapurple;
+}
+
+.row {
+    width: 100%;
+    border: 1px solid red;
+    margin-bottom: 4px;
+}
+
+    .row img {
+        width: 45px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    
+    .row h5 {
+        font-size: 14px;
+        line-height: 45px;
+        display: inline-block;
+        font-weight: 100;
+        vertical-align: top;
+        padding-left: 10px;
     }
