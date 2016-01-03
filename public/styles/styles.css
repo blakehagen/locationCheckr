@@ -52,6 +52,7 @@ h1,h2,h3,h4,h5,h6 {
     width: 99%;
     max-width: 1500px;
     height: 50px;
+    margin-top: 4px;
 }
 
 .toggle-container {
@@ -206,7 +207,7 @@ h1,h2,h3,h4,h5,h6 {
 .connection-invitations {
     margin: 20px auto;
     /*border: 1px solid black;*/
-    width: 500px;
+    width: 470px;
 }
 
 .invitations-list {

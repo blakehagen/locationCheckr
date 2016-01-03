@@ -3,7 +3,7 @@ var User = require('./user.server.model');
 module.exports = {
 
     getUserData: function (req, res, next) {
-        User.findById(req.params.id).populate('connections').exec(function (err, user) {
+        User.findById(req.params.id).populate('connections').populate('invitations').exec(function (err, user) {
 
             if (err) {
                 res.status(500).send(err);
