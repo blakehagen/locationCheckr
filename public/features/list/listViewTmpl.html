@@ -1,17 +1,18 @@
 <div class="top center">
     <h3><i class="fa fa-circle"></i>Online Connections</h3>
-    <!--<button ng-click="reverseGeoLocate()">Reverese Geolocate</button>-->
 </div>
 
 <div class="list-container">
     <div class="list-view-item" ng-repeat="location in listViewData track by $index">
         <div class="row">
-            <img ng-src="{{location.image}}">
-            <h5>{{location.name}}</h5>
-        </div>
-        <div class="row">
-            <h5>Approximate Location: </h5>
-            <h5>{{location.address}}</h5>
+            <div class="img-container-list-view">
+                <img ng-src="{{location.image}}">
+            </div>
+            <div class="small-row">
+                <h5>{{location.name}}</h5>
+                <p></p>
+                <h6>Appx Loc:&nbsp;&nbsp; {{location.address}}</h6>
+            </div>
         </div>
     </div>
 </div>
