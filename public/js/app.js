@@ -25,7 +25,7 @@ angular.module('locationTracker', ['ui.router', 'geolocation', 'angularMoment'])
         })
 
         .state('info', {
-            url: 'user/:id/info',
+            url: '/user/:id/info',
             templateUrl: './features/info/infoTmpl.html',
             controller: 'userCtrl'
         })
