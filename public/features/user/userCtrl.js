@@ -163,8 +163,8 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
         $state.go('user', { id: $scope.user });
     }
 
-    $scope.searchView = function () {
-        $state.go('search', { id: $scope.user });
+    $scope.connectView = function () {
+        $state.go('connect', { id: $scope.user });
     }
 
     $scope.infoView = function () {

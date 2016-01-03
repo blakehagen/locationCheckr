@@ -18,9 +18,9 @@ angular.module('locationTracker', ['ui.router', 'geolocation', 'angularMoment'])
             controller: 'listViewCtrl'
         })
 
-        .state('search', {
-            url: '/user/:id/search',
-            templateUrl: './features/search/searchTmpl.html',
+        .state('connect', {
+            url: '/user/:id/connect',
+            templateUrl: './features/search/connectTmpl.html',
             controller: 'userCtrl'
         })
 
