@@ -48,6 +48,19 @@ angular.module('locationTracker').service('userService', function ($http, $q) {
         return deferred.promise
     };
 
+    this.inviteUserToConnect = function (connectionId, inviterId) {
+        var deferred = $q.defer();
+        $http({
+            method: 'POST',
+            url: '/api/v1/user/invite/' + connectionId,
+            dataType: 'json',
+            data: inviterId
+        }).then(function (response) {
+            deferred.resolve(response.data)
+        })
+        return deferred.promise
+    };
+
 
 
 

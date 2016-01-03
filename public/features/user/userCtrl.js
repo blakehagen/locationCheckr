@@ -11,7 +11,10 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             console.log(user);
             $scope.myConnections = user.connections;
             console.log('my connections initial load:', $scope.myConnections);
-            $scope.getMyLocation();
+            if ($state.current.name === 'user') {
+                $scope.getMyLocation();
+                // console.log('map me');
+            }
         })
     };
 
@@ -54,8 +57,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                     status: 'active',
                     address: address
                 };
-            });
-
+            })
             $scope.mapConnections();
             $scope.go();
         })
@@ -150,11 +152,43 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             console.log('stop broadcast ', response);
         })
     };
-
+    
+    
+    
+    
+    
+    
+    // PING DB FOR NEW DATA EVERY 20 SEC //
     $scope.go = function () {
         setInterval($scope.mapConnections, 20000);
     };
-
+    
+    
+    // MAKE CONNECTIONS //
+    
+    // SELECT SOMEONE TO CONNECT WITH //
+    $scope.userToConnect = function(selected){
+        console.log(selected);
+        $scope.userToConnectId = selected.description._id; 
+    }
+    
+    // SEND SELECTED USER INVITE TO CONNECT //
+    $scope.connect = function(){
+        var connectWithMe = {
+            id: $scope.user
+        };
+        userService.inviteUserToConnect($scope.userToConnectId, connectWithMe).then(function(response){
+            console.log(response);
+        })
+        
+    }
+    
+    
+    
+    
+    
+    
+    // ROUTES //
     $scope.listView = function () {
         $state.go('list', { id: $scope.user });
     }

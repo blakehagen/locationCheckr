@@ -12,5 +12,8 @@ module.exports = function (app) {
     app.route('/api/v1/user/:id/connections') // GET ONLY CONNECTION LOCATION DATA
         .get(userCtrl.getConnectionLocations)
 
+    app.route('/api/v1/user/invite/:id') // POST CONNECTION INVITE
+        .post(userCtrl.inviteToConnect)
+
 
 };

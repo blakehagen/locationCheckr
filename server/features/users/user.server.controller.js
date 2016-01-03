@@ -53,7 +53,17 @@ module.exports = {
             }
             res.status(200).json(result);
         })
-    }
+    },
+
+    inviteToConnect: function (req, res, next) {
+        console.log(req.body);
+        User.findByIdAndUpdate(req.params.id, { $push: { invitations: req.body.id } }, { new: true }).populate('invitations').exec(function (err, result) {
+            if (err) {
+                res.status(500).json(err);
+            }
+            res.status(200).json(result);
+        });
+    },
 
 
 

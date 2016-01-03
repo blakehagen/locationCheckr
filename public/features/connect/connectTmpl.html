@@ -1,48 +1,3 @@
-<div class="top center">
-    <h3>Connect</h3>
-</div>
-
-<div class="connection-invitations">
-    <div class="invitations-list">
-        <div class="invite-list-row">
-            <i class="fa fa-plus"></i>
-            <h5>&nbsp;&nbsp;<span>Makenzie Leigh Tester</span> would like to connect with you.</h5>
-        </div>
-        <div class="invite-list-row">
-            <i class="fa fa-plus"></i>
-            <h5>&nbsp;&nbsp;<span>Emily Hagen</span> would like to connect with you.</h5>
-        </div>
-        <div class="invite-list-row">
-            <i class="fa fa-plus"></i>
-            <h5>&nbsp;&nbsp;<span>Taylor Hagen</span> would like to connect with you.</h5>
-        </div>
-    </div>
-
-</div>
-
-
-<div class="search-container">
-    <div class="invite-list-row no-row-padding">
-        <h4>Make New Connections</h4>
-    </div>
-    <div class="invite-list-row no-row-padding center">
-        <div class="input-holder">
-            <input type="text" placeholder="Type a name ...">
-
-        </div>
-
-    </div>
-
-
-</div>
-
-
-
-
-
-
-
-
 <div class="action-container">
     <a title="Map View">
 
@@ -56,8 +11,8 @@
     </div>
 
     <a title="Info">
-        <div class="action-btn">
-            <i class="fa fa-info" ng-click="infoView()"></i>
+        <div class="action-btn" ng-click="infoView()">
+            <i class="fa fa-info"></i>
         </div>
     </a>
 
@@ -66,4 +21,53 @@
             <i class="fa fa-sign-out"></i>
         </div>
     </a>
+</div>
+
+<div class="top center">
+    <h3>Connect</h3>
+</div>
+
+<div class="connection-invitations">
+    <div class="invitations-list">
+        <div class="invite-list-row">
+            <div class="add">
+                <i class="fa fa-plus"></i>
+            </div>
+            <h5>&nbsp;&nbsp;<span>Makenzie Leigh Tester</span> would like to connect with you.</h5>
+        </div>
+        <div class="invite-list-row">
+            <div class="add">
+                <i class="fa fa-plus"></i>
+            </div>
+            <h5>&nbsp;&nbsp;<span>Emily Hagen</span> would like to connect with you.</h5>
+        </div>
+        <div class="invite-list-row">
+            <div class="add">
+                <i class="fa fa-plus"></i>
+            </div>
+            <h5>&nbsp;&nbsp;<span>Taylor Hagen</span> would like to connect with you.</h5>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="search-container">
+    <div class="invite-list-row no-row-padding">
+        <h4>Make New Connections</h4>
+    </div>
+    <div class="invite-list-row no-row-padding center">
+        <div class="input-holder">
+            <div angucomplete-alt id="makeConnections" placeholder="Search by name" pause="300" selected-object="userToConnect" local-data="myConnections"
+            search-fields="name" title-field="name" minlength="3" input-class="input" match-class="highlight" autofocus>
+            </div>
+        </div>
+        <div class="plus">
+            <i class="fa fa-plus-square-o fa-lg" ng-click="connect()"></i>
+        </div>
+
+
+    </div>
+
+
 </div>
