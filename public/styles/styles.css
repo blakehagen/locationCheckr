@@ -49,7 +49,6 @@ h1,h2,h3,h4,h5,h6 {
     }*/
 
 .top {
-    margin: 0 auto;
     width: 99%;
     max-width: 1500px;
     height: 50px;
@@ -201,3 +200,83 @@ h1,h2,h3,h4,h5,h6 {
         font-weight: 100;
         padding-left: 10px;
     }
+    
+    /* CONNECT VIEW */
+    
+.connection-invitations {
+    margin: 20px auto;
+    /*border: 1px solid black;*/
+    width: 500px;
+}
+
+.invitations-list {
+    width: 100%;
+    /*border: 1px solid dodgerblue;*/
+}
+
+.invite-list-row {
+    width: 100%;
+    height: 30px;
+    /*border: 1px solid red;*/
+    padding-left: 30px;
+}
+
+.search-container {
+    margin: 14px auto;
+    width: 500px;
+    height: 240px;
+    /*border: 1px solid rebeccapurple;*/
+    border-radius: 30px;
+}
+
+    .invite-list-row .fa-plus {
+        color: green;
+        cursor: pointer;
+}
+
+    .invite-list-row h4 {
+        font-size: 16px;
+        line-height: 30px;
+        text-align: center;
+        font-weight: 100;
+    }
+    
+.no-row-padding {
+    padding: 0;
+}
+    
+    .invite-list-row h5 {
+        font-size: 14px;
+        font-weight: 100;
+        line-height: 29px;
+        display: inline-block;
+    }
+    
+    h5 span {
+        font-weight: 400;
+    }
+    
+.input-holder {
+    margin: 10px auto;
+    width: 330px;
+    height: 28px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    
+}
+    
+    .input-holder input {
+        width: 98%;
+        border: none;
+        font-size: 14px;
+        font-weight: 100;
+        padding-top: 3px;
+        font-family: 'Open Sans', sans-serif;   
+    }
+    
+    input:focus {
+        outline: 0 none;
+    }
+    
+    
+    

@@ -20,7 +20,7 @@ angular.module('locationTracker', ['ui.router', 'geolocation', 'angularMoment'])
 
         .state('connect', {
             url: '/user/:id/connect',
-            templateUrl: './features/search/connectTmpl.html',
+            templateUrl: './features/connect/connectTmpl.html',
             controller: 'userCtrl'
         })
 
