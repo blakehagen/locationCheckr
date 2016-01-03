@@ -24,13 +24,19 @@
         </div>
     </a>
 
-    <div class="action-btn">
-        <i class="fa fa-search"></i>
-    </div>
-    <div class="action-btn">
-        <i class="fa fa-info"></i>
-    </div>
-    <a href="/auth/logout">
+    <a title="Search">
+        <div class="action-btn">
+            <i class="fa fa-search" ng-click="searchView()"></i>
+        </div>
+    </a>
+    
+    <a title="Info">
+        <div class="action-btn">
+            <i class="fa fa-info" ng-click="infoView()"></i>
+        </div>
+    </a>
+    
+    <a href="/auth/logout" title="Sign Out">
         <div class="action-btn">
             <i class="fa fa-sign-out"></i>
         </div>

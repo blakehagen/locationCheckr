@@ -19,6 +19,14 @@ angular.module('locationTracker').controller('listViewCtrl', function ($rootScop
         $state.go('user', { id: $rootScope.user });
     }
 
+    $scope.searchView = function () {
+        $state.go('search', { id: $rootScope.user });
+    }
+
+    $scope.infoView = function () {
+        $state.go('info', { id: $rootScope.user });
+    }
+
 
 
 });

@@ -18,16 +18,17 @@ angular.module('locationTracker', ['ui.router', 'geolocation', 'angularMoment'])
             controller: 'listViewCtrl'
         })
 
-        // .state('search', {
-        //     url: '/user/search',
-        //     templateUrl: './features/search/searchTmpl.html',
-        //     // controller: 'userCtrl'
-        // })
+        .state('search', {
+            url: '/user/:id/search',
+            templateUrl: './features/search/searchTmpl.html',
+            controller: 'userCtrl'
+        })
 
-        // .state('info', {
-        //     url: '/info',
-        //     templateUrl: './features/info/infoTmpl.html'
-        // })
+        .state('info', {
+            url: 'user/:id/info',
+            templateUrl: './features/info/infoTmpl.html',
+            controller: 'userCtrl'
+        })
 
     $urlRouterProvider
         .otherwise('/');
