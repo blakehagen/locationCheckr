@@ -48,7 +48,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             // GET ADDRESS VIA REVERSE GEOLOCATION TO SHOW IN LIST VIEW //
             mapService.reverseGeolocate(pos).then(function (address) {
                 // SET CURRENT LOCATION TO SEND TO DB WHEN LOCATION IS BROADCAST //
-                console.log(address);
+                // console.log(address);
                 $scope.myCurrentLocation = {
                     currentLocation: [data.coords.longitude, data.coords.latitude],
                     status: 'active',

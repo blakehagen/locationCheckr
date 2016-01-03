@@ -12,7 +12,7 @@ angular.module('locationTracker').service('mapService', function ($http, $q) {
             }
             // This is checking to see if the Geoeode Status is OK before proceeding
             if (status == google.maps.GeocoderStatus.OK) {
-                console.log(results[0].formatted_address);
+                // console.log(results[0].formatted_address);
             }
             deferred.resolve(results[0].formatted_address);
         })
