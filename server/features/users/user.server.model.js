@@ -11,8 +11,8 @@ var UserSchema = new Schema({
     created_at: { type: Date, default: new Date() },
     updated_at: { type: Date },
     updated_at_readable: { type: String },
-    connections: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    invitations: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    connections: [{ type: Schema.Types.ObjectId, ref: 'User', unique: true }],
+    invitations: [{ type: Schema.Types.ObjectId, ref: 'User', unique: true }],
     status: { type: String }
 });
 

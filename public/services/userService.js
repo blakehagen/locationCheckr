@@ -1,4 +1,4 @@
-angular.module('locationTracker').service('userService', function ($http, $q) {
+angular.module('locationTracker').service('userService', function ($http, $q, $rootScope) {
 
     this.getUser = function (userId) {
         var deferred = $q.defer();
@@ -48,6 +48,18 @@ angular.module('locationTracker').service('userService', function ($http, $q) {
         return deferred.promise
     };
 
+    this.getAllUsers = function () {
+        var deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: '/api/v1/users/'
+        }).then(function (response) {
+            deferred.resolve(response.data)
+        })
+        return deferred.promise
+
+    };
+
     this.inviteUserToConnect = function (connectionId, inviterId) {
         var deferred = $q.defer();
         $http({
@@ -60,6 +72,30 @@ angular.module('locationTracker').service('userService', function ($http, $q) {
         })
         return deferred.promise
     };
+
+    this.clearInputForInvite = function (id) {
+        if (id) {
+            $rootScope.$broadcast('angucomplete-alt:clearInput', id);
+        }
+        else {
+            $rootScope.$broadcast('angucomplete-alt:clearInput');
+        }
+    }
+
+    this.acceptInviteToConnect = function (userId, newConnectionId) {
+        var deferred = $q.defer();
+        $http({
+            method: 'POST',
+            url: '/api/v1/user/accept/' + userId,
+            dataType: 'json',
+            data: newConnectionId
+        }).then(function (response) {
+            deferred.resolve(response.data)
+        })
+        return deferred.promise
+    };
+
+
 
 
 

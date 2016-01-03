@@ -10,7 +10,9 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
         userService.getUser($scope.user).then(function (user) {
             console.log(user);
             $scope.myConnections = user.connections;
-            console.log('my connections initial load:', $scope.myConnections);
+            $scope.myInvitations = user.invitations;
+            // console.log('myInvitations', $scope.myInvitations);
+            // console.log('my connections initial load:', $scope.myConnections);
             if ($state.current.name === 'user') {
                 $scope.getMyLocation();
                 // console.log('map me');
@@ -154,37 +156,55 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     };
     
     
-    
-    
-    
-    
+    ///////////////////////////////////////
     // PING DB FOR NEW DATA EVERY 20 SEC //
+    //////////////////////////////////////
     $scope.go = function () {
         setInterval($scope.mapConnections, 20000);
     };
+    //////////////////////////////////////
+    //////////////////////////////////////
     
     
     // MAKE CONNECTIONS //
     
+    // GET ALL USERS IN DB TO SEARCH //
+    $scope.getAllUsersinDb = function () {
+        userService.getAllUsers().then(function (response) {
+            $rootScope.usersInDb = response;
+            console.log('users in DB', $scope.usersInDb);
+        })
+    };
+    
     // SELECT SOMEONE TO CONNECT WITH //
-    $scope.userToConnect = function(selected){
-        console.log(selected);
-        $scope.userToConnectId = selected.description._id; 
+    $scope.userToConnect = function (selected) {
+        if (selected) {
+            console.log(selected);
+            $scope.userToConnectId = selected.description.id;
+        }
+
     }
     
     // SEND SELECTED USER INVITE TO CONNECT //
-    $scope.connect = function(){
+    $scope.connect = function () {
+        userService.clearInputForInvite();
         var connectWithMe = {
             id: $scope.user
         };
-        userService.inviteUserToConnect($scope.userToConnectId, connectWithMe).then(function(response){
+        userService.inviteUserToConnect($scope.userToConnectId, connectWithMe).then(function (response) {
             console.log(response);
         })
-        
-    }
+    };
     
-    
-    
+    // ACCEPT INVITE TO CONNECT //
+    $scope.acceptConnection = function (userToConnectId) {
+        var newConnection = {
+            id: userToConnectId
+        };
+        userService.acceptInviteToConnect($scope.user, newConnection).then(function (response) {
+            console.log(response);
+        })
+    };
     
     
     

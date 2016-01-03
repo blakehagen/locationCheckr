@@ -15,5 +15,11 @@ module.exports = function (app) {
     app.route('/api/v1/user/invite/:id') // POST CONNECTION INVITE
         .post(userCtrl.inviteToConnect)
 
+    app.route('/api/v1/user/accept/:id') // ACCEPT CONNECTION INVITE
+        .post(userCtrl.acceptConnection)
+
+    app.route('/api/v1/users') // GET ALL USERS IN DB
+        .get(userCtrl.getAllUsers)
+
 
 };

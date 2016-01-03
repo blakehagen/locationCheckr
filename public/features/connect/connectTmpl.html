@@ -29,28 +29,14 @@
 
 <div class="connection-invitations">
     <div class="invitations-list">
-        <div class="invite-list-row">
+        <div class="invite-list-row" ng-repeat="invitation in myInvitations">
             <div class="add">
-                <i class="fa fa-plus"></i>
+                <i class="fa fa-plus" ng-click="acceptConnection(invitation._id)"></i>
             </div>
-            <h5>&nbsp;&nbsp;<span>Makenzie Leigh Tester</span> would like to connect with you.</h5>
-        </div>
-        <div class="invite-list-row">
-            <div class="add">
-                <i class="fa fa-plus"></i>
-            </div>
-            <h5>&nbsp;&nbsp;<span>Emily Hagen</span> would like to connect with you.</h5>
-        </div>
-        <div class="invite-list-row">
-            <div class="add">
-                <i class="fa fa-plus"></i>
-            </div>
-            <h5>&nbsp;&nbsp;<span>Taylor Hagen</span> would like to connect with you.</h5>
+            <h5>&nbsp;&nbsp;<span>{{invitation.name}}</span> would like to connect with you.</h5>
         </div>
     </div>
-
 </div>
-
 
 <div class="search-container">
     <div class="invite-list-row no-row-padding">
@@ -58,16 +44,11 @@
     </div>
     <div class="invite-list-row no-row-padding center">
         <div class="input-holder">
-            <div angucomplete-alt id="makeConnections" placeholder="Search by name" pause="300" selected-object="userToConnect" local-data="myConnections"
-            search-fields="name" title-field="name" minlength="3" input-class="input" match-class="highlight" autofocus>
+            <div angucomplete-alt id="searchUsers" placeholder="Search by name" pause="300" selected-object="userToConnect" local-data="usersInDb" search-fields="name" title-field="name" minlength="3" input-class="input" match-class="highlight" autofocus>
             </div>
         </div>
         <div class="plus">
             <i class="fa fa-plus-square-o fa-lg" ng-click="connect()"></i>
         </div>
-
-
     </div>
-
-
 </div>
