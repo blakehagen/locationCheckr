@@ -1,47 +1,47 @@
-<div class="top">
+<div class="action-container">
     <div class="toggle-container" ng-hide="toggleSwitch">
         <i class="fa fa-toggle-on fa-3x" ng-click="stop()"></i>
         <h5>Location Sharing <span class="green">&nbsp;ON</span></h5>
     </div>
+
     <div class="toggle-container" ng-show="toggleSwitch">
         <i class="fa fa-toggle-off fa-3x" ng-click="broadcastMyLocation()"></i>
         <h5>Location Sharing <span class="red">&nbsp;OFF</span></h5>
+    </div>
+    
+    <div class="btns">
+        <a title="List View">
+            <div class="action-btn" ng-click="listView()">
+                <i class="fa fa-bars"></i>
+            </div>
+        </a>
+        <a title="Connect">
+            <div class="action-btn" ng-click="connectView(); getAllUsersinDb()">
+                <i class="fa fa-plus"></i>
+            </div>
+        </a>
+        <a title="Info">
+            <div class="action-btn" ng-click="infoView()">
+                <i class="fa fa-info"></i>
+            </div>
+        </a>
+        <a href="/auth/logout" title="Sign Out">
+            <div class="action-btn">
+                <i class="fa fa-sign-out"></i>
+            </div>
+        </a>
     </div>
 </div>
 
 <div class="map-container" id="map">
     <div class="loading-info" ng-show="loading">
+        <br>
+        <br>
+        <br>
+        <br>
         <i class="fa fa-spinner fa-3x fa-pulse"></i>
         <br>
         <br>
         <h4>Finding your location ...</h4>
     </div>
-</div>
-
-
-<div class="action-container no-margin">
-
-    <a title="List View">
-        <div class="action-btn" ng-click="listView()">
-            <i class="fa fa-bars"></i>
-        </div>
-    </a>
-
-    <a title="Connect">
-        <div class="action-btn" ng-click="connectView(); getAllUsersinDb()">
-            <i class="fa fa-plus" ></i>
-        </div>
-    </a>
-    
-    <a title="Info">
-        <div class="action-btn" ng-click="infoView()">
-            <i class="fa fa-info" ></i>
-        </div>
-    </a>
-    
-    <a href="/auth/logout" title="Sign Out">
-        <div class="action-btn">
-            <i class="fa fa-sign-out"></i>
-        </div>
-    </a>
 </div>

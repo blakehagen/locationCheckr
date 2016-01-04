@@ -10,6 +10,9 @@ angular.module('locationTracker').controller('listViewCtrl', function ($rootScop
                 }
             }
             // console.log($scope.listViewData);
+            if($scope.listViewData.length === 0){
+                $scope.noConnectionsOnline = true;
+            }
         });
     };
 

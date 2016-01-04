@@ -1,27 +1,29 @@
 <div class="action-container">
-    <a title="Map View">
-        <div class="action-btn" ng-click="mapView()">
-            <i class="fa fa-map-o"></i>
-        </div>
-    </a>
+    <div class="btns">
+        <a title="Map View">
+            <div class="action-btn" ng-click="mapView()">
+                <i class="fa fa-map-o"></i>
+            </div>
+        </a>
 
-    <a title="Connect">
-        <div class="action-btn" ng-click="connectView(); getAllUsersinDb()">
-            <i class="fa fa-plus" ></i>
-        </div>
-    </a>
-    
-    <a title="Info">
-        <div class="action-btn" ng-click="infoView()">
-            <i class="fa fa-info" ></i>
-        </div>
-    </a>
-    
-    <a href="/auth/logout" title="Sign Out">
-        <div class="action-btn">
-            <i class="fa fa-sign-out"></i>
-        </div>
-    </a>
+        <a title="Connect">
+            <div class="action-btn" ng-click="connectView(); getAllUsersinDb()">
+                <i class="fa fa-plus"></i>
+            </div>
+        </a>
+
+        <a title="Info">
+            <div class="action-btn" ng-click="infoView()">
+                <i class="fa fa-info"></i>
+            </div>
+        </a>
+
+        <a href="/auth/logout" title="Sign Out">
+            <div class="action-btn">
+                <i class="fa fa-sign-out"></i>
+            </div>
+        </a>
+    </div>
 </div>
 
 
@@ -30,6 +32,9 @@
 </div>
 
 <div class="list-container">
+    <div class="list-view-item" ng-show="noConnectionsOnline">
+        <h5>No Connections Currently Online</h5>
+    </div>
     <div class="list-view-item" ng-repeat="location in listViewData track by $index">
         <div class="row">
             <div class="img-container-list-view">
@@ -43,4 +48,3 @@
         </div>
     </div>
 </div>
-

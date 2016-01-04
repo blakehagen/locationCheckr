@@ -23,6 +23,10 @@ a {
     color: #333;
 }
 
+.right{ 
+    float: right;
+}
+
 a:visited { 
     text-decoration: none;
 }
@@ -58,12 +62,13 @@ h1,h2,h3,h4,h5,h6 {
 .toggle-container {
     display: inline-block;
     height: 100%;
-    margin-left: 10px;
+    margin-left: 20px;
+    float: left;
 }
 
     .fa-toggle-on, .fa-toggle-off {
         cursor: pointer;
-        margin-top: 2px;
+        margin-top: 7px;
     }
     
     .toggle-container h5 {
@@ -71,7 +76,7 @@ h1,h2,h3,h4,h5,h6 {
         font-size: 14px;
         display: inline-block;
         vertical-align: top;
-        padding: 15px;
+        padding: 21px;
     }
     
     .green {
@@ -86,10 +91,17 @@ h1,h2,h3,h4,h5,h6 {
     
 .action-container {
     width: 100%;
-    height: 50px;
-    margin-top: 10px;
+    height: 60px;
     /*border: 1px solid green;*/
     text-align: center;
+}
+
+.btns {
+    display: inline-block;
+    height: 100%;
+    margin-right: 20px;
+    float: right;
+    
 }
 
 .action-btn {
@@ -98,9 +110,11 @@ h1,h2,h3,h4,h5,h6 {
     height: 37px;
     width: 37px;
     display: inline-block;
-    margin-right: 18px;
-    margin-top: 7px;
+    margin-right: 9px;
+    margin-left: 9px;
+    margin-top: 11px;
     cursor: pointer;
+    vertical-align: top;
 }
 
 .action-btn:hover {
@@ -114,7 +128,7 @@ h1,h2,h3,h4,h5,h6 {
 .map-container {
     width: 100%;
     max-width: 1500px;
-    height: 87%;
+    height: calc(100% - 60px);
     margin: 0px auto;
 }
 
@@ -162,12 +176,19 @@ h1,h2,h3,h4,h5,h6 {
     height: 70px;
     margin: 10px auto;
 }
+
+    .list-view-item h5 {
+        text-align: center;
+        font-size: 14px;
+        font-weight: 100;
+        
+    }
     
 .row {
     width: calc(100% - 30px);
     height: 100%;
     margin-left: 30px;
-    /*border: 1px solid red;*/
+    border: 1px solid red;
 }
 
 .img-container-list-view {
@@ -204,45 +225,69 @@ h1,h2,h3,h4,h5,h6 {
     }
     
     /* CONNECT VIEW */
-    
+
 .connection-invitations {
     margin: 20px auto;
-    /*border: 1px solid black;*/
-    width: 470px;
-}
-
-.invitations-list {
-    width: 100%;
-    /*border: 1px solid dodgerblue;*/
+    /*border: 1px solid orange;*/
+    height: auto;
+    overflow: auto;
+    width: 400px;
 }
 
 .invite-list-row {
     width: 100%;
     height: 30px;
     /*border: 1px solid red;*/
-    padding-left: 30px;
+    /*padding-left: 10px;*/
+}
+
+.split {
+    height: 100%;
+    display: inline-block;
+    /*border: 1px solid blue;*/
+    float: right;
+    width: calc(100% - 20px);
+}
+
+.split-plus {
+    float: left;
+    width: 20px;
+    
+}
+
+.gen-container {
+    width: 100%;
+    text-align:center;
+    margin: 40px 0;
+    /*border: 1px solid darkturquoise;*/
 }
 
 .search-container {
     margin: 14px auto;
     width: 500px;
-    height: 240px;
+    height: 60px;
     /*border: 1px solid rebeccapurple;*/
     border-radius: 30px;
 }
 
-    .invite-list-row .fa-plus {
+    .accept-connect-row .fa-plus {
         color: green;
         cursor: pointer;
-}
+        vertical-align: top;
+        margin-top: 5px;
+    }
 
-    .invite-list-row h4 {
-        font-size: 16px;
-        line-height: 20px;
-        text-align: center;
+    .accept-connect-row h5 {
+        font-size: 14px;
         font-weight: 100;
+        line-height: 20px;
+        display: inline-block;
     }
     
+    h5 span {
+        font-weight: 400;
+    }
+
 .no-row-padding {
     padding: 0;
 }
@@ -250,17 +295,6 @@ h1,h2,h3,h4,h5,h6 {
 .no-margin {
     margin: 0;
 }
-    
-    .invite-list-row h5 {
-        font-size: 14px;
-        font-weight: 100;
-        line-height: 29px;
-        display: inline-block;
-    }
-    
-    h5 span {
-        font-weight: 400;
-    }
     
 .input-holder {
     margin: 0px auto;
@@ -287,17 +321,17 @@ h1,h2,h3,h4,h5,h6 {
     }
     
 .add {
-     display: inline-block;
+    display: inline-block;
     text-align: center;
     vertical-align: top;
-    margin: 7px 0 0 0; 
+    margin: -2px 0 0 0; 
 }
     
 .plus {
     display: inline-block;
     text-align: center;
     vertical-align: top;
-    margin: 7px 0 0 10px;
+    margin: 7px 0 0 7px;
     color: #333;
 }
 
@@ -310,4 +344,38 @@ h1,h2,h3,h4,h5,h6 {
     }
         
     
+    
+    
+    
+    /* MEDIA QUERIES */
+    
+@media (max-width:650px){
+    .btns {
+        width: 100%;
+        text-align: center;
+        margin: 0;
+    }
+    
+    .toggle-container {
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    .list-container {
+        width: 100%;
+    }
+    
+    .search-container {
+        width: 95%
+    }
+    
+    .connection-invitations {
+        width: 90%;
+    }
+    
+    .input-holder {
+        width: 65%;
+    }
+
+}
     
