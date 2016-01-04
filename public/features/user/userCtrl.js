@@ -8,7 +8,13 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     $scope.getUserData = function () {
         $scope.loading = true;
         userService.getUser($scope.user).then(function (user) {
-            // console.log(user);
+            console.log(user);
+            if (user.status === 'active') {
+                $scope.toggleSwitch = false;
+            } else {
+                $scope.toggleSwitch = true;
+            }
+
             $scope.myConnections = user.connections;
             $scope.myInvitations = user.invitations;
             // console.log('myInvitations', $scope.myInvitations);
