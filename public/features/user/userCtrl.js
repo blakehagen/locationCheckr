@@ -8,7 +8,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     $scope.getUserData = function () {
         $scope.loading = true;
         userService.getUser($scope.user).then(function (user) {
-            console.log(user);
+            // console.log(user);
             $scope.myConnections = user.connections;
             $scope.myInvitations = user.invitations;
             // console.log('myInvitations', $scope.myInvitations);
@@ -136,7 +136,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
         $scope.myCurrentLocation.updated_at = new Date();
         $scope.myCurrentLocation.updated_at_readable = moment().format('ddd, MMM D YYYY, h:mma');
         userService.updateMyLocation($scope.user, $scope.myCurrentLocation).then(function (response) {
-            console.log('response after broadcasting btn clicked ', response);
+            // console.log('response after broadcasting btn clicked ', response);
         })
     };
     
@@ -151,7 +151,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             address: undefined
         };
         userService.stopLocation($scope.user, stopData).then(function (response) {
-            console.log('stop broadcast ', response);
+            // console.log('stop broadcast ', response);
         })
     };
     
@@ -172,14 +172,14 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     $scope.getAllUsersinDb = function () {
         userService.getAllUsers().then(function (response) {
             $rootScope.usersInDb = response;
-            console.log('users in DB', $scope.usersInDb);
+            // console.log('users in DB', $scope.usersInDb);
         })
     };
     
     // SELECT SOMEONE TO CONNECT WITH //
     $scope.userToConnect = function (selected) {
         if (selected) {
-            console.log(selected);
+            // console.log(selected);
             $scope.userToConnectId = selected.description.id;
         }
     };
@@ -195,7 +195,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                 id: $scope.user
             };
             userService.inviteUserToConnect($scope.userToConnectId, connectWithMe).then(function (response) {
-                console.log(response);
+                // console.log(response);
                 $timeout(function () {
                     $scope.invitationStatus = true;
                 }, 1000);
@@ -214,7 +214,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             id: userToConnectId
         };
         userService.acceptInviteToConnect($scope.user, newConnection).then(function (response) {
-            console.log(response);
+            // console.log(response);
         })
     };
     
