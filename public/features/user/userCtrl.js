@@ -1,4 +1,4 @@
-angular.module('locationTracker').controller('userCtrl', function ($rootScope, $scope, $stateParams, geolocation, userService, mapService, $state) {
+angular.module('locationTracker').controller('userCtrl', function ($rootScope, $scope, $stateParams, geolocation, userService, mapService, $state, $interval, $timeout) {
 
     // SET USER ID TO SCOPE/ ROOTSCOPE //
     $rootScope.user = $stateParams.id;
@@ -160,7 +160,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     // PING DB FOR NEW DATA EVERY 20 SEC //
     //////////////////////////////////////
     $scope.go = function () {
-        setInterval($scope.mapConnections, 20000);
+        $interval($scope.mapConnections, 20000);
     };
     //////////////////////////////////////
     //////////////////////////////////////
@@ -182,22 +182,34 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             console.log(selected);
             $scope.userToConnectId = selected.description.id;
         }
+    };
 
-    }
+    $scope.invitationStatus = true;
     
     // SEND SELECTED USER INVITE TO CONNECT //
     $scope.connect = function () {
-        userService.clearInputForInvite();
-        var connectWithMe = {
-            id: $scope.user
-        };
-        userService.inviteUserToConnect($scope.userToConnectId, connectWithMe).then(function (response) {
-            console.log(response);
-        })
+        if ($scope.userToConnectId) {
+            userService.clearInputForInvite();
+            $scope.invitationStatus = false;
+            var connectWithMe = {
+                id: $scope.user
+            };
+            userService.inviteUserToConnect($scope.userToConnectId, connectWithMe).then(function (response) {
+                console.log(response);
+                $timeout(function () {
+                    $scope.invitationStatus = true;
+                }, 1000);
+            })
+        }
     };
     
     // ACCEPT INVITE TO CONNECT //
     $scope.acceptConnection = function (userToConnectId) {
+        for (var i = 0; i < $scope.myInvitations.length; i++) {
+            if (userToConnectId === $scope.myInvitations[i]._id) {
+                $scope.myInvitations.splice(i, 1);
+            }
+        }
         var newConnection = {
             id: userToConnectId
         };

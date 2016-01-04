@@ -44,11 +44,15 @@
     </div>
     <div class="invite-list-row no-row-padding center">
         <div class="input-holder">
-            <div angucomplete-alt id="searchUsers" placeholder="Search by name" pause="300" selected-object="userToConnect" local-data="usersInDb" search-fields="name" title-field="name" minlength="3" input-class="input" match-class="highlight" autofocus>
+            <div angucomplete-alt id="searchUsers" placeholder="Search by name" pause="300" selected-object="userToConnect" local-data="usersInDb"
+            search-fields="name" title-field="name" minlength="3" input-class="input" match-class="highlight" autofocus>
             </div>
         </div>
-        <div class="plus">
+        <div class="plus" ng-show="invitationStatus">
             <i class="fa fa-plus-square-o fa-lg" ng-click="connect()"></i>
+        </div>
+        <div class="plus" ng-hide="invitationStatus">
+            <i class="fa fa-check fa-lg"></i>
         </div>
     </div>
 </div>
