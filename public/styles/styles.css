@@ -36,6 +36,13 @@ h1,h2,h3,h4,h5,h6 {
    margin: 0;
 }
 
+.login-wrapper {
+    height: 100%;
+    width: 100%;
+    background: url('./assets/map2-compressor.jpg');
+    background-size: cover;
+}
+
 /*.login-container {
     border: 1px solid #FFF;
     border-radius: 10px;
@@ -61,8 +68,8 @@ h1,h2,h3,h4,h5,h6 {
 
 .head-wrapper {
     height: 120px;
-    width: 100%;
     position: fixed;
+    right: 0;
     z-index: 999;
 }
 
@@ -367,6 +374,7 @@ h1,h2,h3,h4,h5,h6 {
     
     .head-wrapper {
         text-align: center;
+        width: 100%;
     }
     
     .btns {

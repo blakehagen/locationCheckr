@@ -38,7 +38,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
 
             map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: data.coords.latitude, lng: data.coords.longitude },
-                zoom: 13
+                zoom: 14
             });
             $scope.map = map;
             // var infoWindow = new google.maps.InfoWindow({ map: map });
