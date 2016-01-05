@@ -59,24 +59,36 @@ h1,h2,h3,h4,h5,h6 {
     margin-top: 4px;
 }
 
+.head-wrapper {
+    height: 120px;
+    width: 100%;
+    position: fixed;
+    z-index: 999;
+}
+
 .toggle-container {
-    display: inline-block;
-    height: 100%;
-    margin-left: 20px;
-    float: left;
+    height: 80%;
+    margin-top: 2px;
+    margin-right: 20px;
+    float: right;
+    padding: 0 10px;
+    border: 1px solid #333;
+    border-radius: 40px;
+    background: #fff;
 }
 
     .fa-toggle-on, .fa-toggle-off {
         cursor: pointer;
-        margin-top: 7px;
+        margin-top: 0px;
     }
     
     .toggle-container h5 {
         font-weight: 100;
-        font-size: 14px;
+        font-size: 16px;
         display: inline-block;
         vertical-align: top;
-        padding: 21px;
+        padding: 12px 7px 0 7px;
+        cursor: default;
     }
     
     .green {
@@ -92,8 +104,10 @@ h1,h2,h3,h4,h5,h6 {
 .action-container {
     width: 100%;
     height: 60px;
-    /*border: 1px solid green;*/
+
+    background: none;
     text-align: center;
+    z-index: 9999999;
 }
 
 .btns {
@@ -101,7 +115,6 @@ h1,h2,h3,h4,h5,h6 {
     height: 100%;
     margin-right: 20px;
     float: right;
-    
 }
 
 .action-btn {
@@ -115,6 +128,7 @@ h1,h2,h3,h4,h5,h6 {
     margin-top: 11px;
     cursor: pointer;
     vertical-align: top;
+    background: #FFF;
 }
 
 .action-btn:hover {
@@ -122,13 +136,12 @@ h1,h2,h3,h4,h5,h6 {
 }
 
     .action-btn .fa  {
-        margin: 10px 0px 0 0;
+        margin: 11px 0px 0 0;
     }
     
 .map-container {
     width: 100%;
-    max-width: 1500px;
-    height: calc(100% - 60px);
+    height: 100%;
     margin: 0px auto;
 }
 
@@ -351,6 +364,11 @@ h1,h2,h3,h4,h5,h6 {
     /* MEDIA QUERIES */
     
 @media (max-width:650px){
+    
+    .head-wrapper {
+        text-align: center;
+    }
+    
     .btns {
         width: 100%;
         text-align: center;
@@ -358,8 +376,9 @@ h1,h2,h3,h4,h5,h6 {
     }
     
     .toggle-container {
-        width: 100%;
+        width: 260px;
         margin: 0 auto;
+        float: none;
     }
     
     .list-container {
