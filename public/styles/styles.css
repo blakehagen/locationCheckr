@@ -39,25 +39,39 @@ h1,h2,h3,h4,h5,h6 {
 .login-wrapper {
     height: 100%;
     width: 100%;
-    background: url('./assets/map2-compressor.jpg');
+    background: url('./assets/map4-compressor.jpg');
+    /*opacity: 0.7;*/
     background-size: cover;
 }
 
-/*.login-container {
-    border: 1px solid #FFF;
-    border-radius: 10px;
-    /*width: 300px;*/
-    /*height: 150px;*/
-    /*margin: 0 auto;
-}*/
+.login-container {
+    width: 315px;
+    height: 150px;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    border-radius: 20px;
+    vertical-align: middle;
+    background: #fff;
+    text-align: center;
+    opacity: 0.9;
+}
 
-    /*.login-container h1 {
-        color: #FFF;
-        font-size: 64px;
-        font-weight: 100;
-        letter-spacing: 1px;
+    .login-container h1 {
+        color: rgba(0, 0, 0, 1);
+        font-weight: 400;
+        font-size: 40px;
         text-align: center;
-    }*/
+        padding-top: 8px;
+    }
+    
+.google-btn {
+    width: 255px;
+    height: 60px;
+    background: #ED6464;
+    border-radius: 14px;
+    margin: 7px auto;
+}
 
 .top {
     width: 99%;
