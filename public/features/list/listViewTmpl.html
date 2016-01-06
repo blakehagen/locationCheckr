@@ -1,49 +1,76 @@
-<div class="action-container">
-    <div class="btns">
-        <a title="Map View">
-            <div class="action-btn" ng-click="mapView()">
-                <i class="fa fa-map-o"></i>
-            </div>
-        </a>
+<div class="list-view-wrapper">
 
-        <a title="Connect">
-            <div class="action-btn" ng-click="connectView(); getAllUsersinDb()">
-                <i class="fa fa-plus"></i>
-            </div>
-        </a>
 
-        <a title="Info">
-            <div class="action-btn" ng-click="infoView()">
-                <i class="fa fa-info"></i>
-            </div>
-        </a>
+    <div class="action-container">
+        <div class="btns">
+            <a title="Map View">
+                <div class="action-btn" ng-click="mapView()">
+                    <i class="fa fa-map-o"></i>
+                </div>
+            </a>
 
-        <a href="/auth/logout" title="Sign Out">
-            <div class="action-btn">
-                <i class="fa fa-sign-out"></i>
-            </div>
-        </a>
+            <a title="Connect">
+                <div class="action-btn" ng-click="connectView(); getAllUsersinDb()">
+                    <i class="fa fa-plus"></i>
+                </div>
+            </a>
+
+            <a title="Info">
+                <div class="action-btn" ng-click="infoView()">
+                    <i class="fa fa-info"></i>
+                </div>
+            </a>
+
+            <a href="/auth/logout" title="Sign Out">
+                <div class="action-btn">
+                    <i class="fa fa-sign-out"></i>
+                </div>
+            </a>
+        </div>
     </div>
-</div>
 
 
-<div class="top center">
-    <h3><i class="fa fa-circle"></i>Online Connections</h3>
-</div>
-
-<div class="list-container">
-    <div class="list-view-item" ng-show="noConnectionsOnline">
-        <h5>No Connections Currently Online</h5>
+    <div class="top center">
+        <div class="title">
+            <h3><i class="fa fa-circle"></i>Online Connections</h3>
+        </div>
     </div>
-    <div class="list-view-item" ng-repeat="location in listViewData track by $index">
-        <div class="row">
-            <div class="img-container-list-view">
-                <img ng-src="{{location.image}}">
+
+
+    <div class="list-container">
+        <div class="list-view-item" ng-show="noConnectionsOnline">
+            <h5>No Connections Currently Online</h5>
+        </div>
+        <div class="list-view-item" ng-repeat="location in listViewData track by $index">
+            <div class="row">
+                <div class="img-container-list-view">
+                    <img ng-src="{{location.image}}">
+                </div>
+                <div class="small-row">
+                    <h5>{{location.name}}</h5>
+                    <p></p>
+                    <h6>Appx Loc:&nbsp;&nbsp; {{location.address}}</h6>
+                </div>
             </div>
-            <div class="small-row">
-                <h5>{{location.name}}</h5>
-                <p></p>
-                <h6>Appx Loc:&nbsp;&nbsp; {{location.address}}</h6>
+        </div>
+    </div>
+
+    <div class="top center sub-title">
+        <div class="title">
+            <h3><i class="fa fa-circle" id="red"></span></i>Offline Connections</h3>
+        </div>
+    </div>
+    <div class="list-container">
+        <div class="list-view-item" ng-repeat="connection in offlineData track by $index">
+            <div class="row">
+                <div class="img-container-list-view">
+                    <img ng-src="{{connection.image}}">
+                </div>
+                <div class="small-row">
+                    <h5>{{connection.name}}</h5>
+                    <p></p>
+                    <h6>Not Sharing Location</h6>
+                </div>
             </div>
         </div>
     </div>
