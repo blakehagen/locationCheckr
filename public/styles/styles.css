@@ -47,7 +47,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .login-container {
     width: 280px;
-    height: 295px;
+    height: 287px;
     margin: auto;
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
@@ -73,7 +73,7 @@ h1,h2,h3,h4,h5,h6 {
 
     .login-container h1 {
         color: rgba(0, 0, 0, 1);
-        font-size: 36px;
+        font-size: 34px;
         text-align: center;
         cursor: default;
     }
@@ -421,6 +421,7 @@ h1,h2,h3,h4,h5,h6 {
     
     .input-holder input {
         width: 90%;
+        height: 90%;
         border: none;
         font-size: 14px;
         font-weight: 100;
