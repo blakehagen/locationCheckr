@@ -85,7 +85,7 @@ angular.module('locationTracker').service('userService', function ($http, $q, $r
     this.acceptInviteToConnect = function (userId, newConnectionId) {
         var deferred = $q.defer();
         $http({
-            method: 'POST',
+            method: 'PUT',
             url: '/api/v1/user/accept/' + userId,
             dataType: 'json',
             data: newConnectionId

@@ -15,8 +15,8 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                 $scope.toggleSwitch = true;
             }
 
-            $scope.myConnections = user.connections;
-            $scope.myInvitations = user.invitations;
+            $rootScope.myConnections = user.connections;
+            $rootScope.myInvitations = user.invitations;
             // console.log('myInvitations', $scope.myInvitations);
             // console.log('my connections initial load:', $scope.myConnections);
             if ($state.current.name === 'user') {
@@ -175,9 +175,10 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     // MAKE CONNECTIONS //
     
     // GET ALL USERS IN DB TO SEARCH //
-    $scope.getAllUsersinDb = function () {
+    $rootScope.getAllUsersinDb = function () {
         userService.getAllUsers().then(function (response) {
             $rootScope.usersInDb = response;
+            console.log('gettng users in db');
             // console.log('users in DB', $scope.usersInDb);
         })
     };
@@ -195,6 +196,10 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     // SEND SELECTED USER INVITE TO CONNECT //
     $scope.connect = function () {
         if ($scope.userToConnectId) {
+            if ($scope.userToConnectId === $scope.user) {
+                return false;
+                userService.clearInputForInvite();
+            }
             userService.clearInputForInvite();
             $scope.invitationStatus = false;
             var connectWithMe = {

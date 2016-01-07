@@ -63,27 +63,28 @@ module.exports = {
             res.status(200).json(result);
         });
     },
-    
-    acceptConnection: function(req, res, next){
+
+    acceptConnection: function (req, res, next) {
         var newConnection = req.body.id;
-        User.findByIdAndUpdate(req.params.id, { $push: { connections: newConnection }},{ new: true }, function(err, user){
-            if(err){
+        User.findByIdAndUpdate(req.params.id, { $push: { connections: newConnection } }, { new: true }, function (err, user) {
+            if (err) {
                 res.status(500);
             }
-
-            User.findByIdAndUpdate(req.params.id, {
-                $pull: { invitations: newConnection
-                }},{ new: true },
-                function(err, user){
-                if(err){
+            User.findByIdAndUpdate(req.params.id, { $pull: { invitations: newConnection } }, { new: true }, function (err, user) {
+                if (err) {
                     res.send(500);
                 }
+                User.findByIdAndUpdate(newConnection, { $push: { connections: req.params.id } }, { new: true }, function (err, user) {
+                    if (err) {
+                        res.send(500);
+                    }
+                })
             })
             res.status(200).json(user);
-        });  
+        });
     },
-    
-     getAllUsers: function (req, res, next) {
+
+    getAllUsers: function (req, res, next) {
         User.find().exec(function (err, users) {
             var userData = [];
             for (var i = 0; i < users.length; i++) {

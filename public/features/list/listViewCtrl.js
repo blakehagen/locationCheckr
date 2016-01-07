@@ -30,6 +30,7 @@ angular.module('locationTracker').controller('listViewCtrl', function ($rootScop
     }
 
     $scope.connectView = function () {
+        
         $state.go('connect', { id: $rootScope.user });
     }
 
