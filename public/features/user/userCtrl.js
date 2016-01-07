@@ -8,7 +8,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     $scope.getUserData = function () {
         $scope.loading = true;
         userService.getUser($scope.user).then(function (user) {
-            console.log(user);
+            // console.log(user);
             if (user.status === 'active') {
                 $scope.toggleSwitch = false;
             } else {
@@ -18,7 +18,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             $rootScope.myConnections = user.connections;
             $rootScope.myInvitations = user.invitations;
             // console.log('myInvitations', $scope.myInvitations);
-            console.log('my connections initial load:', $rootScope.myConnections);
+            // console.log('my connections initial load:', $rootScope.myConnections);
             if ($state.current.name === 'user') {
                 $scope.getMyLocation();
                 // console.log('map me');
@@ -130,8 +130,6 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                     infowindow.open(map, this);
                 })
             }
-            // console.log(markers.length);
-            // console.log(markers);
         })
     };
 
@@ -178,8 +176,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     $rootScope.getAllUsersinDb = function () {
         userService.getAllUsers().then(function (response) {
             $rootScope.usersInDb = response;
-            console.log('gettng users in db');
-            // console.log('users in DB', $scope.usersInDb);
+            // console.log('gettng users in db');
         })
     };
     
@@ -210,7 +207,6 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                 id: $scope.user
             };
             userService.inviteUserToConnect($scope.userToConnectId, connectWithMe).then(function (response) {
-                // console.log(response);
                 $timeout(function () {
                     $scope.invitationStatus = true;
                 }, 1000);
