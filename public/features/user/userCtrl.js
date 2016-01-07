@@ -18,7 +18,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             $rootScope.myConnections = user.connections;
             $rootScope.myInvitations = user.invitations;
             // console.log('myInvitations', $scope.myInvitations);
-            // console.log('my connections initial load:', $scope.myConnections);
+            console.log('my connections initial load:', $rootScope.myConnections);
             if ($state.current.name === 'user') {
                 $scope.getMyLocation();
                 // console.log('map me');
@@ -198,7 +198,11 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
         if ($scope.userToConnectId) {
             if ($scope.userToConnectId === $scope.user) {
                 return false;
-                userService.clearInputForInvite();
+            }
+            for (var i = 0; i < $rootScope.myConnections.length; i++) {
+                if ($scope.userToConnectId === $rootScope.myConnections[i]._id) {
+                    return false;
+                }
             }
             userService.clearInputForInvite();
             $scope.invitationStatus = false;

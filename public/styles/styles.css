@@ -464,6 +464,31 @@ h1,h2,h3,h4,h5,h6 {
     background-size: cover; 
 }
 
+.info-text {
+    margin: 20px auto;
+    border: 1px solid #333;
+    border-radius: 40px;
+    width: 430px;
+    background: #FFF;
+}
+
+.contact {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    padding: 5px;
+}
+
+    .contact h6 {
+        font-weight: 100;
+        padding-top: 3px;
+    }
+
+.sm-item {
+    display: inline-block;
+    margin: 0 8px 0 8px;
+}
+
         
 
     /* MEDIA QUERIES */
@@ -513,6 +538,10 @@ h1,h2,h3,h4,h5,h6 {
     
     .small-row {
         margin: 16px 0 0 0;
+    }
+    
+    .info-text {
+        width: 80%;
     }
 
 }
