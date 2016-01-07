@@ -39,7 +39,9 @@ h1,h2,h3,h4,h5,h6 {
 .login-wrapper {
     height: 100%;
     width: 100%;
-    background: url('./assets/map5-compressor.jpg');
+    background: url('./assets/m20-compressor.png');
+    /*background: url('./assets/m20-compressor.png');*/
+    /*background: url('./assets/map5-compressor.jpg');*/
     background-size: cover;
 }
 
@@ -211,7 +213,8 @@ h1,h2,h3,h4,h5,h6 {
 .list-view-wrapper {
     height: 100%;
     width: 100%;
-    background: url('./assets/map7-compressor.jpg');
+    background: url('./assets/m21-compressor.png');
+    /*background: url('./assets/m20-compressor.png');*/
     background-size: cover;
 }
 
@@ -326,10 +329,8 @@ h1,h2,h3,h4,h5,h6 {
 .connect-view-wrapper {
     height: 100%;
     width: 100%;
-    background: url('./assets/map8-compressor.jpg');
+    background: url('./assets/m23-compressor.png');
     background-size: cover;
-    
-    
 }
 
 .connection-invitations {
@@ -448,6 +449,15 @@ h1,h2,h3,h4,h5,h6 {
     .plus .fa-check {
         color: green;
     }
+    
+/* Info View */
+.info-view-wrapper {
+    height: 100%;
+    width: 100%;
+    background: url('./assets/m20-compressor.png');
+    background-size: cover; 
+}
+
         
     
     
