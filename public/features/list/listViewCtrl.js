@@ -1,5 +1,7 @@
 angular.module('locationTracker').controller('listViewCtrl', function ($rootScope, $scope, $stateParams, geolocation, userService, $state) {
 
+    $scope.displayConnections = false;
+
     $scope.getListData = function () {
         userService.getConnectionLocations($rootScope.user).then(function (response) {
             console.log(response.connections);
@@ -13,9 +15,11 @@ angular.module('locationTracker').controller('listViewCtrl', function ($rootScop
                 }
             }
             // console.log($scope.listViewData);
-            if($scope.listViewData.length === 0){
+            if ($scope.listViewData.length === 0) {
                 $scope.noConnectionsOnline = true;
             }
+
+            $scope.displayConnections = true;
         });
     };
 

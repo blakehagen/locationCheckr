@@ -32,16 +32,22 @@
             </a>
         </div>
     </div>
+    
+    <div class="top center" ng-hide="displayConnections">
+        <div class="title" id="loading-list-view">
+            <i class="fa fa-spinner fa-3x fa-pulse"></i>
+            <h3></i>Loading...</h3>
+        </div>
+    </div>
 
-
-    <div class="top center">
+    <div class="top center" ng-show="displayConnections">
         <div class="title">
             <h3><i class="fa fa-circle"></i>Online Connections</h3>
         </div>
     </div>
 
 
-    <div class="list-container">
+    <div class="list-container" ng-show="displayConnections">
         <div class="list-view-item" ng-show="noConnectionsOnline">
             <h5 id="no-connections-online">No Connections Currently Online</h5>
         </div>
@@ -59,12 +65,12 @@
         </div>
     </div>
 
-    <div class="top center sub-title">
+    <div class="top center sub-title" ng-show="displayConnections">
         <div class="title">
             <h3><i class="fa fa-circle" id="red"></span></i>Offline Connections</h3>
         </div>
     </div>
-    <div class="list-container">
+    <div class="list-container" ng-show="displayConnections">
         <div class="list-view-item" ng-repeat="connection in offlineData track by $index">
             <div class="row">
                 <div class="img-container-list-view">
