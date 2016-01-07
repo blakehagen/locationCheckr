@@ -185,7 +185,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     // SELECT SOMEONE TO CONNECT WITH //
     $scope.userToConnect = function (selected) {
         if (selected) {
-            // console.log(selected);
+            console.log(selected);
             $scope.userToConnectId = selected.description.id;
         }
     };

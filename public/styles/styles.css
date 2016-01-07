@@ -114,7 +114,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .toggle-container {
     height: 80%;
-    margin-top: 2px;
+    margin-top: 6px;
     margin-right: 25px;
     float: right;
     padding: 0 10px;
@@ -255,7 +255,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
     .sub-title {
-        margin-top: 60px;
+        margin-top: 30px;
     }
 
 .list-container {
@@ -340,46 +340,49 @@ h1,h2,h3,h4,h5,h6 {
 
 .connection-invitations {
     margin: 20px auto;
-    /*border: 1px solid orange;*/
+    border: 1px solid #333;
     height: auto;
     overflow: auto;
-    width: 400px;
+    width: 420px;
+    background: #FFF;
+    border-radius: 40px;
+    padding: 10px;
 }
 
 .invite-list-row {
     width: 100%;
     height: 30px;
-    /*border: 1px solid red;*/
-    /*padding-left: 10px;*/
+    margin-top: 8px;
 }
 
+    .invite-list-row h4 {
+        padding: 5px;
+    }
+    
 .split {
     height: 100%;
     display: inline-block;
-    /*border: 1px solid blue;*/
-    float: right;
     width: calc(100% - 20px);
 }
 
 .split-plus {
     float: left;
     width: 20px;
-    
 }
 
 .gen-container {
     width: 100%;
     text-align:center;
     margin: 40px 0;
-    /*border: 1px solid darkturquoise;*/
 }
 
 .search-container {
-    margin: 14px auto;
-    width: 500px;
-    height: 60px;
-    /*border: 1px solid rebeccapurple;*/
-    border-radius: 30px;
+    margin: 0 auto;
+    width: 430px;
+    height: 96px;
+    border: 1px solid #333;
+    border-radius: 40px;
+    background: #FFF;
 }
 
     .accept-connect-row .fa-plus {
@@ -413,18 +416,17 @@ h1,h2,h3,h4,h5,h6 {
     width: 330px;
     height: 28px;
     border: 1px solid #bbb;
-    border-radius: 5px;
+    border-radius: 12px;
     display: inline-block;
-    
 }
     
     .input-holder input {
-        width: 98%;
+        width: 90%;
         border: none;
         font-size: 14px;
         font-weight: 100;
         padding-top: 3px;
-        padding-left: 7px;
+        padding-left: 0px;
         font-family: 'Open Sans', sans-serif;   
     }
     
@@ -464,10 +466,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
         
-    
-    
-    
-    
+
     /* MEDIA QUERIES */
     
 @media (max-width:650px){

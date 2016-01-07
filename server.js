@@ -16,19 +16,8 @@ app.use(passport.session());
 require('./server/features/auth/auth.server.routes')(app, passport);
 require('./server/features/users/user.server.routes')(app);
 
-
-
-
-
-
-
-
-
-
-
-
 // PORT //
-var port = process.env.PORT || 80;
+var port = process.env.PORT || 3000;
 app.listen(port, function () {
     console.log('Listenting on port ' + port);
 });
