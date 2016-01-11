@@ -1,4 +1,4 @@
-angular.module('locationTracker').controller('userCtrl', function ($rootScope, $scope, $stateParams, geolocation, userService, mapService, $state, $interval, $timeout) {
+angular.module('locationTracker').controller('userCtrl', function ($rootScope, $scope, $stateParams, geolocation, userService, mapService, $state, $interval, $timeout, socketService) {
 
     // SET USER ID TO SCOPE/ ROOTSCOPE //
     $rootScope.user = $stateParams.id;
@@ -17,11 +17,9 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
 
             $rootScope.myConnections = user.connections;
             $rootScope.myInvitations = user.invitations;
-            // console.log('myInvitations', $scope.myInvitations);
-            // console.log('my connections initial load:', $rootScope.myConnections);
+
             if ($state.current.name === 'user') {
                 $scope.getMyLocation();
-                // console.log('map me');
             }
         })
     };
@@ -30,8 +28,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     $scope.getUserData();
     var map;
     
-    // GET USER'S LOCATION/MAP VIA GOOGLE MAPS //
-    // THIS FUNCTION RUNS AS PART OF getUserData FUNCTION //
+    // GET AUTH USER'S LOCATION/MAP VIA GOOGLE MAPS //
     $scope.getMyLocation = function () {
         $scope.coords = geolocation.getLocation().then(function (data) {
             $scope.loading = false;
@@ -42,22 +39,24 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             });
             $scope.map = map;
             // var infoWindow = new google.maps.InfoWindow({ map: map });
-            var pos = {
+            $scope.pos = {
                 lat: data.coords.latitude,
                 lng: data.coords.longitude
             };
 
+            $scope.latLng = new google.maps.LatLng(data.coords.latitude, data.coords.longitude);
+
             var myLocation = new google.maps.Marker({
-                position: pos,
+                position: $scope.pos,
                 map: map,
                 title: "My Location",
                 icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
             });
 
-            myLocation.setPosition(pos);
+            myLocation.setPosition($scope.pos);
            
             // GET ADDRESS VIA REVERSE GEOLOCATION TO SHOW IN LIST VIEW //
-            mapService.reverseGeolocate(pos).then(function (address) {
+            mapService.reverseGeolocate($scope.pos).then(function (address) {
                 // SET CURRENT LOCATION TO SEND TO DB WHEN LOCATION IS BROADCAST //
                 // console.log(address);
                 $scope.myCurrentLocation = {
@@ -66,28 +65,22 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                     address: address
                 };
             })
-            $scope.mapConnections();
-            $scope.go();
+            $scope.mapMyConnectionsOnLoad();
         })
     };
     
-    // MAP MY CONNECTIONS //
-    var locations = [];
-    var markers = [];
-    $scope.mapConnections = function () {
+    // MAP MY CONNECTIONS ON LOAD //
+    $scope.mapMyConnectionsOnLoad = function () {
         console.log('PING');
-        for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(null);
-        }
-        locations = [];
-        markers = [];
+
+        $scope.locations = [];
+        $scope.markers = [];
 
         userService.getConnectionLocations($scope.user).then(function (response) {
             // console.log('these are my connections', response.connections);
 
             for (var i = 0; i < response.connections.length; i++) {
-                if (response.connections[i].status === 'stop') {
-                    // console.log('ding');
+                if (response.connections[i].status !== 'active') {
                     response.connections.splice(i, 1);
                     i--;
                 }
@@ -95,7 +88,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
 
             for (var i = 0; i < response.connections.length; i++) {
                 var connection = response.connections[i];
-                locations.push({
+                $scope.locations.push({
                     latlon: new google.maps.LatLng(connection.currentLocation[1], connection.currentLocation[0]),
                     name: connection.name,
                     id: connection._id,
@@ -103,27 +96,28 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                     status: connection.status
                 })
             };
-            // console.log(locations);
 
-            for (var i = 0; i < locations.length; i++) {
+            for (var i = 0; i < $scope.locations.length; i++) {
+                $scope.locations[i].distanceFromCurrentUser = (google.maps.geometry.spherical.computeDistanceBetween($scope.latLng, $scope.locations[i].latlon) * .000621371).toFixed(2);
+            }
+
+            for (var i = 0; i < $scope.locations.length; i++) {
                 var marker = new google.maps.Marker({
-                    position: locations[i].latlon,
+                    position: $scope.locations[i].latlon,
                     map: map,
-                    title: locations[i].name,
+                    title: $scope.locations[i].name,
                     icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
-                    id: locations[i].id,
-                    status: locations[i].status,
-                    info: "<p>" + locations[i].name + " has been here since " + locations[i].updated + "</p>"
+                    id: $scope.locations[i].id,
+                    status: $scope.locations[i].status,
+                    info: "<p>" + $scope.locations[i].name + " has been here since " + $scope.locations[i].updated + "</p>"
                 });
 
-                markers.push(marker);
+                $scope.markers.push(marker);
             }
-            var infowindow = new google.maps.InfoWindow({
-                // test: 'test123'
-            });
+            var infowindow = new google.maps.InfoWindow;
 
-            for (var i = 0; i < markers.length; i++) {
-                var marker = markers[i];
+            for (var i = 0; i < $scope.markers.length; i++) {
+                var marker = $scope.markers[i];
 
                 google.maps.event.addListener(marker, 'click', function () {
                     infowindow.setContent(this.info);
@@ -133,42 +127,105 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
         })
     };
 
-    // SEND MY CURRENT LOCATION INFO TO DB //
+    // SHARE MY LOCATION --> SEND MY CURRENT LOCATION INFO TO DB //
     $scope.toggleSwitch = true;
     $scope.broadcastMyLocation = function () {
         $scope.toggleSwitch = !$scope.toggleSwitch;
-        $scope.myCurrentLocation.updated_at = new Date();
+        $scope.myCurrentLocation.updated_at = moment();
         $scope.myCurrentLocation.updated_at_readable = moment().format('ddd, MMM D YYYY, h:mma');
         userService.updateMyLocation($scope.user, $scope.myCurrentLocation).then(function (response) {
             // console.log('response after broadcasting btn clicked ', response);
+            
+            // SOCKET --> NEED TO SEND NOTICE THAT I UPDATED (SHARING MY LOCATION)
+            socketService.emit('userUpdated', $scope.user);
+            console.log('My location sent to db and socket.io message sent');
         })
     };
     
-    // STOP SENDING LOCATION AND REMOVE LOCATION FROM CURRENT LOCATION ARRAY //
+    // STOP SHARING MY LOCATION --> SENDING NULL AND REMOVE LOCATION FROM DB //
     $scope.stop = function () {
         $scope.toggleSwitch = !$scope.toggleSwitch;
         var stopData = {
             currentLocation: [undefined, undefined],
-            updated_at: new Date(),
+            updated_at: moment(),
             updated_at_readable: moment().format('ddd, MMM D YYYY, h:mma'),
             status: 'stop',
-            address: undefined
+            address: null
         };
         userService.stopLocation($scope.user, stopData).then(function (response) {
             // console.log('stop broadcast ', response);
+            
+            // SOCKET --> NEED TO SEND NOTICE THAT I UPDATED (STOPPED SHARING LOCATION)
+            socketService.emit('userUpdated', $scope.user);
+            console.log('My location sent to db and socket.io message sent');
         })
     };
     
-    
-    ///////////////////////////////////////
-    // PING DB FOR NEW DATA EVERY 20 SEC //
-    //////////////////////////////////////
-    $scope.go = function () {
-        $interval($scope.mapConnections, 20000);
-    };
-    //////////////////////////////////////
-    //////////////////////////////////////
-    
+    // SOCKET --> LISTENING FOR NOTICE OF A USER STATUS CHANGE //
+    socketService.on('updateThisUser', function (userToUpdateId) {
+        // --> Go get new data for the updated user //
+        userService.getUpdatedUserInfo(userToUpdateId).then(function (updatedUser) {
+
+            for (var i = 0; i < $scope.locations.length; i++) {
+                if ($scope.locations[i].id === updatedUser._id) {
+                    if (updatedUser.status === 'stop') {
+                        $scope.locations.splice(i, 1);
+                        i--;
+                    }
+                    for (var j = 0; j < $scope.markers.length; j++) {
+                        if ($scope.markers[j].id === updatedUser._id) {
+                            $scope.markers[j].setMap(null);
+                            $scope.markers = [];
+                        }
+                    }
+                    return false;
+
+                } else {
+                    console.log('The new user is not in the locations array. I will create a new location object and push it in...');
+                }
+            }
+            var updatedLocation = {
+                status: updatedUser.status,
+                latlon: new google.maps.LatLng(updatedUser.currentLocation[1], updatedUser.currentLocation[0]),
+                name: updatedUser.name,
+                id: updatedUser._id,
+                updated: updatedUser.updatedAt_readable
+            };
+            // Adding in the 'distanceFromCurrentUser' property //
+            updatedLocation.distanceFromCurrentUser = (google.maps.geometry.spherical.computeDistanceBetween($scope.latLng, updatedLocation.latlon) * .000621371).toFixed(2);
+
+            $scope.locations.push(updatedLocation);
+
+            for (var i = 0; i < $scope.markers.length; i++) {
+                $scope.markers[i].setMap(null);
+            }
+            $scope.markers = [];
+
+            for (var i = 0; i < $scope.locations.length; i++) {
+                var newMarker = new google.maps.Marker({
+                    position: $scope.locations[i].latlon,
+                    map: $scope.map,
+                    title: $scope.locations[i].name,
+                    icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+                    id: $scope.locations[i].id,
+                    distanceFromUser: $scope.locations[i].distanceFromCurrentUser,
+                    info: "<p>" + $scope.locations[i].name + " has been here since " + $scope.locations[i].updated_at_readable + "</p><p>Located " + $scope.locations[i].distanceFromCurrentUser + " miles from your current location.</p>"
+                })
+                $scope.markers.push(newMarker);
+            }
+            
+            // Create info windows for each marker // 
+            var infowindow = new google.maps.InfoWindow;
+
+            for (var i = 0; i < $scope.markers.length; i++) {
+
+                google.maps.event.addListener($scope.markers[i], 'click', function () {
+                    infowindow.setContent(this.info);
+                    infowindow.open($scope.map, this);
+                })
+            }
+        })
+    });
     
     // MAKE CONNECTIONS //
     

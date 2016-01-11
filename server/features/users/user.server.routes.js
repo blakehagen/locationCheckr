@@ -6,6 +6,9 @@ module.exports = function (app) {
         .post(userCtrl.updateLocation) // POST USER'S CURRENT LOCATION
         .get(userCtrl.getUserData) // GET USER'S DATA
         
+    app.route('/api/v1/user/updated/:id')
+        .get(userCtrl.getUpdatedUserData) // GET UPDATED USER'S DATA
+        
     app.route('/api/v1/user/stop/:id')
         .post(userCtrl.stopLocation) // POST USER'S CURRENT LOCATION
         

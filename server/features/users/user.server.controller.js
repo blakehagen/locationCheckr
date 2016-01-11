@@ -45,7 +45,6 @@ module.exports = {
                     delete result.connections[i].googleId;
                     delete result.connections[i].connections;
                     delete result.connections[i].created_at;
-
                 }
             }
             if (err) {
@@ -99,7 +98,19 @@ module.exports = {
             }
             res.status(200).json(userData)
         })
-    }
+    },
+    
+    getUpdatedUserData: function (req, res, next) {
+        User.findById(req.params.id).populate('connections').populate('invitations').exec(function (err, user) {
+
+            if (err) {
+                res.status(500).send(err);
+            }
+
+            user.googleId = undefined; // DONT NEED GOOGLE ID ON CLIENT SIDE
+            res.status(200).json(user);
+        })
+    },
 
 
 

@@ -95,8 +95,17 @@ angular.module('locationTracker').service('userService', function ($http, $q, $r
         return deferred.promise
     };
 
+    this.getUpdatedUserInfo = function (userToUpdateId) {
+        var deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: '/api/v1/user/updated/' + userToUpdateId
+        }).then(function (response) {
+            deferred.resolve(response.data)
+        })
+        return deferred.promise
 
-
+    };
 
 
 
