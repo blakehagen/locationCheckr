@@ -114,7 +114,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .toggle-container {
     height: 80%;
-    margin-top: 6px;
+    margin-top: 16px;
     margin-right: 25px;
     float: right;
     padding: 0 10px;
@@ -218,12 +218,12 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 #loading-list-view {
-    height: 110px;
+    /*height: 110px;*/
     padding-top: 14px;
 }
 
 .top h3 {
-    font-size: 23px;
+    font-size: 19px;
     font-weight: 100;
     line-height: 38px;
 }
@@ -250,7 +250,7 @@ h1,h2,h3,h4,h5,h6 {
     width: 270px;
     height: 40px;
     border-radius: 40px;
-    margin: 0 auto;
+    margin: 30px auto;
 }
 
     .sub-title {
@@ -477,7 +477,7 @@ h1,h2,h3,h4,h5,h6 {
     width: 100%;
     height: auto;
     text-align: center;
-    padding: 5px;
+    padding: 10px;
 }
 
     .contact h6 {
@@ -509,7 +509,7 @@ h1,h2,h3,h4,h5,h6 {
     
     .toggle-container {
         width: 260px;
-        margin: 0 auto;
+        margin: 16px auto;
         float: none;
     }
     
@@ -539,6 +539,11 @@ h1,h2,h3,h4,h5,h6 {
     
     .small-row {
         margin: 16px 0 0 0;
+    }
+    
+    .double-spaced-text {
+         margin: 8px 0 0 0;
+        
     }
     
     .info-text {

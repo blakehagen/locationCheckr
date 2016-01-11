@@ -4,7 +4,7 @@ angular.module('locationTracker').controller('listViewCtrl', function ($rootScop
 
     $scope.getListData = function () {
         userService.getConnectionLocations($rootScope.user).then(function (response) {
-            console.log(response.connections);
+            // console.log(response.connections);
             $scope.listViewData = [];
             $scope.offlineData = [];
             for (var i = 0; i < response.connections.length; i++) {

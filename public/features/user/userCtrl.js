@@ -7,6 +7,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     // GET USER DATA/LOCATION ON SIGN IN //
     $scope.getUserData = function () {
         $scope.loading = true;
+        $scope.switchShow = false;
         userService.getUser($scope.user).then(function (user) {
             // console.log(user);
             if (user.status === 'active') {
@@ -32,6 +33,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     $scope.getMyLocation = function () {
         $scope.coords = geolocation.getLocation().then(function (data) {
             $scope.loading = false;
+            $scope.switchShow = true;
 
             map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: data.coords.latitude, lng: data.coords.longitude },
@@ -100,6 +102,8 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             for (var i = 0; i < $scope.locations.length; i++) {
                 $scope.locations[i].distanceFromCurrentUser = (google.maps.geometry.spherical.computeDistanceBetween($scope.latLng, $scope.locations[i].latlon) * .000621371).toFixed(2);
             }
+            
+            console.log($scope.locations);
 
             for (var i = 0; i < $scope.locations.length; i++) {
                 var marker = new google.maps.Marker({
@@ -109,7 +113,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                     icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
                     id: $scope.locations[i].id,
                     status: $scope.locations[i].status,
-                    info: "<p>" + $scope.locations[i].name + " has been here since " + $scope.locations[i].updated + "</p>"
+                    info: "<p>" + $scope.locations[i].name + " has been here since " + $scope.locations[i].updated + "</p><p>Located " + $scope.locations[i].distanceFromCurrentUser + " miles from your current location.</p>"
                 });
 
                 $scope.markers.push(marker);
@@ -128,7 +132,6 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     };
 
     // SHARE MY LOCATION --> SEND MY CURRENT LOCATION INFO TO DB //
-    $scope.toggleSwitch = true;
     $scope.broadcastMyLocation = function () {
         $scope.toggleSwitch = !$scope.toggleSwitch;
         $scope.myCurrentLocation.updated_at = moment();
