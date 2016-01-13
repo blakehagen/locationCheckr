@@ -207,6 +207,27 @@ h1,h2,h3,h4,h5,h6 {
         letter-spacing: 1px;
     }
     
+.info-window-popup {
+    /*max-width: 300px;*/
+    /*border: 1px solid red;*/
+}
+
+.info-window-popup-row {
+    /*border: 1px solid purple;*/
+    margin-bottom: 4px;
+    }
+
+    .info-window-popup h5 {
+        font-size: 18px;
+        color: #333;
+    }
+    
+    .info-window-popup h6 {
+        font-size: 12px;
+        font-weight: 100;
+        color: #333;
+    }
+    
 /* LIST VIEW */
 
 .list-view-wrapper {

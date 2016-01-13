@@ -113,7 +113,9 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                     icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
                     id: $scope.locations[i].id,
                     status: $scope.locations[i].status,
-                    info: "<p>" + $scope.locations[i].name + "</p><br><p>Located " + $scope.locations[i].distanceFromCurrentUser + " miles from your current location.</p><br><p>Started sharing location from here on " + $scope.locations[i].updated + "."
+                    info: '<div class="info-window-popup"><div class="info-window-popup-row"><h5>' + $scope.locations[i].name + '</h5></div><div class="info-window-popup-row"><h6>' + $scope.locations[i].distanceFromCurrentUser + ' miles away</h6></div><div class="info-window-popup-row"><h6>'+ $scope.locations[i].updated + '</h6></div></div>'
+                    
+                                
                 });
 
                 $scope.markers.push(marker);
@@ -135,7 +137,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     $scope.broadcastMyLocation = function () {
         $scope.toggleSwitch = !$scope.toggleSwitch;
         $scope.myCurrentLocation.updated_at = moment();
-        $scope.myCurrentLocation.updated_at_readable = moment().format('ddd, MMM D YYYY, h:mma');
+        $scope.myCurrentLocation.updated_at_readable = moment().format('LT - l');
         userService.updateMyLocation($scope.user, $scope.myCurrentLocation).then(function (response) {
             // console.log('response after broadcasting btn clicked ', response);
             
@@ -151,7 +153,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
         var stopData = {
             currentLocation: [undefined, undefined],
             updated_at: moment(),
-            updated_at_readable: moment().format('ddd, MMM D YYYY, h:mma'),
+            updated_at_readable: moment().format('LT - l'),
             status: 'stop',
             address: null
         };
@@ -192,7 +194,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                 latlon: new google.maps.LatLng(updatedUser.currentLocation[1], updatedUser.currentLocation[0]),
                 name: updatedUser.name,
                 id: updatedUser._id,
-                updated: updatedUser.updatedAt_readable
+                updated: updatedUser.updated_at_readable
             };
             // Adding in the 'distanceFromCurrentUser' property //
             updatedLocation.distanceFromCurrentUser = (google.maps.geometry.spherical.computeDistanceBetween($scope.latLng, updatedLocation.latlon) * .000621371).toFixed(2);
@@ -212,7 +214,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                     icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
                     id: $scope.locations[i].id,
                     distanceFromUser: $scope.locations[i].distanceFromCurrentUser,
-                    info: "<p>" + $scope.locations[i].name + " has been here since " + $scope.locations[i].updated_at_readable + "</p><p>Located " + $scope.locations[i].distanceFromCurrentUser + " miles from your current location.</p>"
+                    info: '<div class="info-window-popup"><div class="info-window-popup-row"><h5>' + $scope.locations[i].name + '</h5></div><div class="info-window-popup-row"><h6>' + $scope.locations[i].distanceFromCurrentUser + ' miles away</h6></div><div class="info-window-popup-row"><h6>'+ $scope.locations[i].updated + '</h6></div></div>'
                 })
                 $scope.markers.push(newMarker);
             }
