@@ -113,7 +113,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                     icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
                     id: $scope.locations[i].id,
                     status: $scope.locations[i].status,
-                    info: "<p>" + $scope.locations[i].name + " has been here since " + $scope.locations[i].updated + "</p><p>Located " + $scope.locations[i].distanceFromCurrentUser + " miles from your current location.</p>"
+                    info: "<p>" + $scope.locations[i].name + "</p><br><p>Located " + $scope.locations[i].distanceFromCurrentUser + " miles from your current location.</p><br><p>Started sharing location from here on " + $scope.locations[i].updated + "."
                 });
 
                 $scope.markers.push(marker);
