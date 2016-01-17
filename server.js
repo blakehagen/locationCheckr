@@ -24,13 +24,19 @@ require('./server/features/users/user.server.routes')(app);
 io.on('connection', function (socket) {
     console.log('User connected to socket', socket.id);
     socket.on('userUpdated', function (userToUpdateId) {
-        console.log('id of user that needs to be updated by others ', userToUpdateId);
+        // console.log('id of user that needs to be updated by others ', userToUpdateId);
         socket.broadcast.emit('updateThisUser', userToUpdateId);
     });
+
+    socket.on('invitationToConnect', function (data) {
+        // console.log('invitationData', data);
+        socket.broadcast.emit('newInvitation', data);
+    });
+
 });
 
 // PORT //
-var port = process.env.PORT || 80;
+var port = process.env.PORT || 3000;
 http.listen(port, function () {
     console.log('locationCheckr listenting on port ' + port);
 });

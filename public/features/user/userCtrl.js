@@ -9,7 +9,8 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
         $scope.loading = true;
         $scope.switchShow = false;
         userService.getUser($scope.user).then(function (user) {
-            // console.log(user);
+            $scope.userData = user;
+            console.log('user data: ', $scope.userData);
             if (user.status === 'active') {
                 $scope.toggleSwitch = false;
             } else {
@@ -18,6 +19,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
 
             $rootScope.myConnections = user.connections;
             $rootScope.myInvitations = user.invitations;
+            console.log('my invitations ', $rootScope.myInvitations);
 
             if ($state.current.name === 'user') {
                 $scope.getMyLocation();
@@ -102,8 +104,8 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             for (var i = 0; i < $scope.locations.length; i++) {
                 $scope.locations[i].distanceFromCurrentUser = (google.maps.geometry.spherical.computeDistanceBetween($scope.latLng, $scope.locations[i].latlon) * .000621371).toFixed(2);
             }
-            
-            console.log($scope.locations);
+
+            // console.log($scope.locations);
 
             for (var i = 0; i < $scope.locations.length; i++) {
                 var marker = new google.maps.Marker({
@@ -113,9 +115,9 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                     icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
                     id: $scope.locations[i].id,
                     status: $scope.locations[i].status,
-                    info: '<div class="info-window-popup"><div class="info-window-popup-row"><h5>' + $scope.locations[i].name + '</h5></div><div class="info-window-popup-row"><h6>' + $scope.locations[i].distanceFromCurrentUser + ' miles away</h6></div><div class="info-window-popup-row"><h6>'+ $scope.locations[i].updated + '</h6></div></div>'
-                    
-                                
+                    info: '<div class="info-window-popup"><div class="info-window-popup-row"><h5>' + $scope.locations[i].name + '</h5></div><div class="info-window-popup-row"><h6>' + $scope.locations[i].distanceFromCurrentUser + ' miles away</h6></div><div class="info-window-popup-row"><h6>' + $scope.locations[i].updated + '</h6></div></div>'
+
+
                 });
 
                 $scope.markers.push(marker);
@@ -214,7 +216,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                     icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
                     id: $scope.locations[i].id,
                     distanceFromUser: $scope.locations[i].distanceFromCurrentUser,
-                    info: '<div class="info-window-popup"><div class="info-window-popup-row"><h5>' + $scope.locations[i].name + '</h5></div><div class="info-window-popup-row"><h6>' + $scope.locations[i].distanceFromCurrentUser + ' miles away</h6></div><div class="info-window-popup-row"><h6>'+ $scope.locations[i].updated + '</h6></div></div>'
+                    info: '<div class="info-window-popup"><div class="info-window-popup-row"><h5>' + $scope.locations[i].name + '</h5></div><div class="info-window-popup-row"><h6>' + $scope.locations[i].distanceFromCurrentUser + ' miles away</h6></div><div class="info-window-popup-row"><h6>' + $scope.locations[i].updated + '</h6></div></div>'
                 })
                 $scope.markers.push(newMarker);
             }
@@ -269,12 +271,35 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                 id: $scope.user
             };
             userService.inviteUserToConnect($scope.userToConnectId, connectWithMe).then(function (response) {
+                console.log(response);
+
+                $scope.inviteData = {
+                    _id: $scope.user,
+                    name: $scope.userData.name,
+                    // _id: $scope.userToConnectId
+                };
+
+                console.log('inviteData ', $scope.inviteData);
+
+                socketService.emit('invitationToConnect', $scope.inviteData);
+                console.log('sent invite to socket.io');
+
                 $timeout(function () {
                     $scope.invitationStatus = true;
                 }, 1000);
             })
         }
     };
+    
+    // LISTENING FOR NEW INVITATIONS //
+    socketService.on('newInvitation', function (data) {
+        console.log('invitation socket invite from server: ', data);
+        if (data.personToInviteId === $scope.user) {
+            console.log('you\'ve got a new invitation!');
+        }
+         $rootScope.myInvitations.unshift(data);
+        
+    });
     
     // ACCEPT INVITE TO CONNECT //
     $scope.acceptConnection = function (userToConnectId) {
@@ -309,5 +334,11 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     $scope.infoView = function () {
         $state.go('info', { id: $scope.user });
     }
+
+    $scope.$on('$destroy', function (event) {
+        socketService.removeAllListeners();
+        console.log('$Destroy triggered!');
+    });
+
 
 });

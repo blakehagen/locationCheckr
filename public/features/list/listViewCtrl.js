@@ -1,4 +1,4 @@
-angular.module('locationTracker').controller('listViewCtrl', function ($rootScope, $scope, $stateParams, geolocation, userService, $state) {
+angular.module('locationTracker').controller('listViewCtrl', function ($rootScope, $scope, $stateParams, geolocation, userService, $state, socketService) {
 
     $scope.displayConnections = false;
 
@@ -30,13 +30,19 @@ angular.module('locationTracker').controller('listViewCtrl', function ($rootScop
     }
 
     $scope.connectView = function () {
-        
+
         $state.go('connect', { id: $rootScope.user });
     }
 
     $scope.infoView = function () {
         $state.go('info', { id: $rootScope.user });
     }
+
+    $scope.$on('$destroy', function (event) {
+        socketService.removeAllListeners();
+        console.log('$Destroy triggered!');
+    });
+
 
 
 

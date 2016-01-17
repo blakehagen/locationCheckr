@@ -1,5 +1,5 @@
 angular.module('locationTracker').factory('socketService', ['$rootScope', function ($rootScope) {
-    var socket = io.connect('http://locationcheckr.com');
+    var socket = io.connect('http://localhost:3000');
 
     return {
         removeAllListeners: function (eventName, callback) {
