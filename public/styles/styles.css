@@ -566,14 +566,16 @@ h1,h2,h3,h4,h5,h6 {
         margin: 16px 0 0 0;
     }
     
-    .double-spaced-text {
-         margin: 8px 0 0 0;
-        
-    }
-    
     .info-text {
         width: 80%;
     }
 
+}
+
+@media (max-width:445px){
+
+    .double-spaced-text {
+         margin: 14px 0 0 0;  
+    }
 }
     
