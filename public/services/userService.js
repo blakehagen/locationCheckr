@@ -57,7 +57,6 @@ angular.module('locationTracker').service('userService', function ($http, $q, $r
             deferred.resolve(response.data)
         })
         return deferred.promise
-
     };
 
     this.inviteUserToConnect = function (connectionId, inviterId) {
@@ -80,7 +79,7 @@ angular.module('locationTracker').service('userService', function ($http, $q, $r
         else {
             $rootScope.$broadcast('angucomplete-alt:clearInput');
         }
-    }
+    };
 
     this.acceptInviteToConnect = function (userId, newConnectionId) {
         var deferred = $q.defer();
@@ -104,10 +103,6 @@ angular.module('locationTracker').service('userService', function ($http, $q, $r
             deferred.resolve(response.data)
         })
         return deferred.promise
-
     };
-
-
-
 
 });

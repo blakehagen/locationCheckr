@@ -4,7 +4,7 @@ angular.module('locationTracker').controller('listViewCtrl', function ($rootScop
 
     $scope.getListData = function () {
         userService.getConnectionLocations($rootScope.user).then(function (response) {
-            console.log(response.connections);
+            // console.log(response.connections);
             $rootScope.listViewData = [];
             $rootScope.offlineData = [];
             for (var i = 0; i < response.connections.length; i++) {
@@ -14,8 +14,8 @@ angular.module('locationTracker').controller('listViewCtrl', function ($rootScop
                      $rootScope.offlineData.push(response.connections[i]);
                 }
             }
-            console.log('listview data ', $rootScope.listViewData);
-            console.log('offline ',  $rootScope.offlineData);
+            // console.log('listview data ', $rootScope.listViewData);
+            // console.log('offline ',  $rootScope.offlineData);
             if ($rootScope.listViewData.length === 0) {
                 $scope.noConnectionsOnline = true;
             }
@@ -26,20 +26,20 @@ angular.module('locationTracker').controller('listViewCtrl', function ($rootScop
     
     // SOCKET --> LISTENING FOR NOTICE OF A USER STATUS CHANGE //
     socketService.on('updateThisUser', function (userToUpdateId) {
-        console.log('myConnections on listview, ', $rootScope.myConnections);
+        // console.log('myConnections on listview, ', $rootScope.myConnections);
         if ($rootScope.myConnections.length === 0) {
-            console.log('update made by someone you are NOT connected with');
+            // console.log('update made by someone you are NOT connected with');
             return false;
         }
         for (var i = 0; i < $rootScope.myConnections.length; i++) {
             if ($rootScope.myConnections[i]._id !== userToUpdateId) {
-                console.log('update made by someone you are NOT connected with');
+                // console.log('update made by someone you are NOT connected with');
                 return false;
             }
         }
         // --> Go get new data for the updated user //
         userService.getUpdatedUserInfo(userToUpdateId).then(function (updatedUser) {
-            console.log('updated user: ', updatedUser);
+            // console.log('updated user: ', updatedUser);
 
             for (var i = 0; i < $rootScope.listViewData.length; i++) {
                 if ($rootScope.listViewData[i]._id === updatedUser._id) {
@@ -88,7 +88,7 @@ angular.module('locationTracker').controller('listViewCtrl', function ($rootScop
 
     $scope.$on('$destroy', function (event) {
         socketService.removeAllListeners();
-        console.log('$Destroy triggered!');
+        // console.log('$Destroy triggered!');
     });
 
 

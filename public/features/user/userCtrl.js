@@ -10,7 +10,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
         $scope.switchShow = false;
         userService.getUser($scope.user).then(function (user) {
             $scope.userData = user;
-            console.log('user data: ', $scope.userData);
+            // console.log('user data: ', $scope.userData);
             if (user.status === 'active') {
                 $scope.toggleSwitch = false;
             } else {
@@ -19,8 +19,6 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
 
             $rootScope.myConnections = user.connections;
             $rootScope.myInvitations = user.invitations;
-            console.log('my invitations ', $rootScope.myInvitations);
-            console.log('my connections ', $rootScope.myConnections);
 
             if ($state.current.name === 'user') {
                 $scope.getMyLocation();
@@ -59,6 +57,14 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             });
 
             myLocation.setPosition($scope.pos);
+
+            var infoWindow = new google.maps.InfoWindow({
+                content: '<div class="info-window-popup"><div class="info-window-popup-row"><h5>' + $scope.userData.name + '</h5></div><div class="info-window-popup-row"><h6>You are here!</h6></div>'
+            });
+
+            google.maps.event.addListener(myLocation, 'click', function () {
+                infoWindow.open(map, myLocation);
+            });
            
             // GET ADDRESS VIA REVERSE GEOLOCATION TO SHOW IN LIST VIEW //
             mapService.reverseGeolocate($scope.pos).then(function (address) {
@@ -76,7 +82,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     
     // MAP MY CONNECTIONS ON LOAD //
     $scope.mapMyConnectionsOnLoad = function () {
-        console.log('PING');
+        // console.log('PING');
 
         $scope.locations = [];
         $scope.markers = [];
@@ -117,8 +123,6 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                     id: $scope.locations[i].id,
                     status: $scope.locations[i].status,
                     info: '<div class="info-window-popup"><div class="info-window-popup-row"><h5>' + $scope.locations[i].name + '</h5></div><div class="info-window-popup-row"><h6>' + $scope.locations[i].distanceFromCurrentUser + ' miles away</h6></div><div class="info-window-popup-row"><h6>' + $scope.locations[i].updated + '</h6></div></div>'
-
-
                 });
 
                 $scope.markers.push(marker);
@@ -146,7 +150,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             
             // SOCKET --> NEED TO SEND NOTICE THAT I UPDATED (SHARING MY LOCATION)
             socketService.emit('userUpdated', $scope.user);
-            console.log('My location sent to db and socket.io message sent');
+            // console.log('My location sent to db and socket.io message sent');
         })
     };
     
@@ -165,20 +169,20 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             
             // SOCKET --> NEED TO SEND NOTICE THAT I UPDATED (STOPPED SHARING LOCATION)
             socketService.emit('userUpdated', $scope.user);
-            console.log('My location sent to db and socket.io message sent');
+            // console.log('My location sent to db and socket.io message sent');
         })
     };
     
     // SOCKET --> LISTENING FOR NOTICE OF A USER STATUS CHANGE //
     socketService.on('updateThisUser', function (userToUpdateId) {
         if ($rootScope.myConnections.length === 0) {
-            console.log('update made by someone you are NOT connected with');
+            // console.log('update made by someone you are NOT connected with');
             return false;
         }
 
         for (var i = 0; i < $rootScope.myConnections.length; i++) {
             if ($rootScope.myConnections[i]._id !== userToUpdateId) {
-                console.log('update made by someone you are NOT connected with');
+                // console.log('update made by someone you are NOT connected with');
                 return false;
             }
         }
@@ -200,7 +204,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                     return false;
 
                 } else {
-                    console.log('The new user is not in the locations array. I will create a new location object and push it in...');
+                    // console.log('The new user is not in the locations array. I will create a new location object and push it in...');
                 }
             }
             var updatedLocation = {
@@ -291,10 +295,10 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                     // _id: $scope.userToConnectId
                 };
 
-                console.log('inviteData ', $scope.inviteData);
+                // console.log('inviteData ', $scope.inviteData);
 
                 socketService.emit('invitationToConnect', $scope.inviteData);
-                console.log('sent invite to socket.io');
+                // console.log('sent invite to socket.io');
 
                 $timeout(function () {
                     $scope.invitationStatus = true;
@@ -305,9 +309,9 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     
     // LISTENING FOR NEW INVITATIONS //
     socketService.on('newInvitation', function (data) {
-        console.log('invitation socket invite from server: ', data);
+        // console.log('invitation socket invite from server: ', data);
         if (data.personToInviteId === $scope.user) {
-            console.log('you\'ve got a new invitation!');
+            // console.log('you\'ve got a new invitation!');
         }
         $rootScope.myInvitations.unshift(data);
 
@@ -324,7 +328,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             id: userToConnectId
         };
         userService.acceptInviteToConnect($scope.user, newConnection).then(function (response) {
-            console.log(response);
+            // console.log(response);
             socketService.emit('userUpdated', $scope.user);
         })
     };
@@ -350,7 +354,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
 
     $scope.$on('$destroy', function (event) {
         socketService.removeAllListeners();
-        console.log('$Destroy triggered!');
+        // console.log('$Destroy triggered!');
     });
 
 
