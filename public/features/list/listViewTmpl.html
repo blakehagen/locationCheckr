@@ -48,8 +48,8 @@
 
 
     <div class="list-container" ng-show="displayConnections">
-        <div class="list-view-item" ng-show="noConnectionsOnline">
-            <h5 id="no-connections-online">No Connections Currently Online</h5>
+        <div class="list-view-item no-connections" ng-show="noConnectionsOnline">
+            <h5 id="no-connections-online">No Connections Online</h5>
         </div>
         <div class="list-view-item" ng-repeat="location in listViewData track by $index">
             <div class="row">

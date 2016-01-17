@@ -299,11 +299,15 @@ h1,h2,h3,h4,h5,h6 {
         font-weight: 100;  
     }
     
+.no-connections {
+    padding: 10px;
+    height: auto;
+}
+    
 #no-connections-online {
         text-align: center;
         font-size: 14px;
         font-weight: 100; 
-        line-height: 65px;   
 }
     
 .row {
