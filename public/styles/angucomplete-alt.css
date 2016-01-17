@@ -17,6 +17,13 @@
     background-color: #ffffff;
 }
 
+@media (max-width:500px){
+    .angucomplete-dropdown {
+        width: 220px;
+    }
+}
+    
+
 .angucomplete-searching {
     color: #acacac;
     font-size: 14px;
@@ -38,7 +45,7 @@
     font-weight: 100;
     font-family: 'Open Sans', sans-serif;
     color: #333;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     text-align: left;
     clear: both;
 }
