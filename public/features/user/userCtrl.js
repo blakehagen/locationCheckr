@@ -20,6 +20,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             $rootScope.myConnections = user.connections;
             $rootScope.myInvitations = user.invitations;
             console.log('my invitations ', $rootScope.myInvitations);
+            console.log('my connections ', $rootScope.myConnections);
 
             if ($state.current.name === 'user') {
                 $scope.getMyLocation();
@@ -170,6 +171,17 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     
     // SOCKET --> LISTENING FOR NOTICE OF A USER STATUS CHANGE //
     socketService.on('updateThisUser', function (userToUpdateId) {
+        if ($rootScope.myConnections.length === 0) {
+            console.log('update made by someone you are NOT connected with');
+            return false;
+        }
+
+        for (var i = 0; i < $rootScope.myConnections.length; i++) {
+            if ($rootScope.myConnections[i]._id !== userToUpdateId) {
+                console.log('update made by someone you are NOT connected with');
+                return false;
+            }
+        }
         // --> Go get new data for the updated user //
         userService.getUpdatedUserInfo(userToUpdateId).then(function (updatedUser) {
 
@@ -297,8 +309,8 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
         if (data.personToInviteId === $scope.user) {
             console.log('you\'ve got a new invitation!');
         }
-         $rootScope.myInvitations.unshift(data);
-        
+        $rootScope.myInvitations.unshift(data);
+
     });
     
     // ACCEPT INVITE TO CONNECT //
@@ -312,7 +324,8 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             id: userToConnectId
         };
         userService.acceptInviteToConnect($scope.user, newConnection).then(function (response) {
-            // console.log(response);
+            console.log(response);
+            socketService.emit('userUpdated', $scope.user);
         })
     };
     
