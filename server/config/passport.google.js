@@ -38,8 +38,10 @@ module.exports = function (passport) {
                 // edit img url to not be just 50px //
                 user.image = user.image.replace('?sz=50', '');
                 // console.log('New user created: ', user);
+                user.connections.push('569c1df161f5894751463443');
                 user.save();
                 done(null, user);
+                console.log('NEW USER SAVED:', user);
             }
         });
     }));

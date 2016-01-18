@@ -498,6 +498,14 @@ h1,h2,h3,h4,h5,h6 {
     background: #FFF;
 }
 
+    .info-text h4 {
+        padding: 20px 20px 4px 20px;
+        font-weight: 100;
+        font-size: 16px;
+        color: #333;
+        text-align: left;
+    }
+
 .contact {
     width: 100%;
     height: auto;
@@ -507,7 +515,8 @@ h1,h2,h3,h4,h5,h6 {
 
     .contact h6 {
         font-weight: 100;
-        padding-top: 3px;
+        padding-top: 6px;
+        padding-bottom: 10px;
     }
 
 .sm-item {
@@ -569,7 +578,6 @@ h1,h2,h3,h4,h5,h6 {
     .info-text {
         width: 80%;
     }
-
 }
 
 @media (max-width:445px){
