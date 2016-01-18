@@ -41,7 +41,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                 zoom: 14
             });
             $scope.map = map;
-            // var infoWindow = new google.maps.InfoWindow({ map: map });
+
             $scope.pos = {
                 lat: data.coords.latitude,
                 lng: data.coords.longitude
@@ -150,7 +150,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             
             // SOCKET --> NEED TO SEND NOTICE THAT I UPDATED (SHARING MY LOCATION)
             socketService.emit('userUpdated', $scope.user);
-            // console.log('My location sent to db and socket.io message sent');
+            console.log('My location sent to db and socket.io message sent');
         })
     };
     
@@ -169,23 +169,32 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             
             // SOCKET --> NEED TO SEND NOTICE THAT I UPDATED (STOPPED SHARING LOCATION)
             socketService.emit('userUpdated', $scope.user);
-            // console.log('My location sent to db and socket.io message sent');
+            // console.log('My location [NULL] to db and socket.io message sent');
         })
     };
     
     // SOCKET --> LISTENING FOR NOTICE OF A USER STATUS CHANGE //
     socketService.on('updateThisUser', function (userToUpdateId) {
+        // console.log('received socket message of a user change somewhere');
         if ($rootScope.myConnections.length === 0) {
-            // console.log('update made by someone you are NOT connected with');
+            // console.log(' id:1 - update made by someone you are NOT connected with');
             return false;
         }
 
         for (var i = 0; i < $rootScope.myConnections.length; i++) {
+            // console.log('id of connections in myConnections: ', $rootScope.myConnections[i]._id);
             if ($rootScope.myConnections[i]._id !== userToUpdateId) {
-                // console.log('update made by someone you are NOT connected with');
-                return false;
+                $scope.updateUserStatus = false;
+            } else if ($rootScope.myConnections[i]._id === userToUpdateId) {
+                $scope.updateUserStatus = true;
+                break;
             }
         }
+
+        if ($scope.updateUserStatus === false) {
+            return false;
+        }
+        
         // --> Go get new data for the updated user //
         userService.getUpdatedUserInfo(userToUpdateId).then(function (updatedUser) {
 
@@ -263,7 +272,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
     // SELECT SOMEONE TO CONNECT WITH //
     $scope.userToConnect = function (selected) {
         if (selected) {
-            console.log(selected);
+            // console.log(selected);
             $scope.userToConnectId = selected.description.id;
         }
     };
@@ -287,7 +296,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
                 id: $scope.user
             };
             userService.inviteUserToConnect($scope.userToConnectId, connectWithMe).then(function (response) {
-                console.log(response);
+                // console.log(response);
 
                 $scope.inviteData = {
                     _id: $scope.user,
@@ -331,9 +340,7 @@ angular.module('locationTracker').controller('userCtrl', function ($rootScope, $
             // console.log(response);
             socketService.emit('userUpdated', $scope.user);
         })
-    };
-    
-    
+    }; 
     
     // ROUTES //
     $scope.listView = function () {
